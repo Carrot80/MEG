@@ -16,6 +16,8 @@ end
     tMEG            = ( 0:size(data,2)-1 )/samplingRate ;
     h = figure('visible','on'); 
     plot(tMEG,mean(data))
+    axis tight ;
+    ylim([-4e-12 4e-12]) ;
     PathPlot        = strcat(Path.Preprocessing, '\', 'MeanMEG') ;
     NameTitle       = strcat ('Mean MEG', {' '}, '-', {' '}, PatientName)
     title (NameTitle) ;
@@ -38,7 +40,7 @@ end
 
     cfg         = [] ;
     cfg.dataset = fileName ;
-    ft_qualitycheck(cfg) ;
+    ft_qualitycheck(cfg)
     PathPlot3        = strcat(Path.Preprocessing, '\', 'QualityCheck') ;
     print('-dpng', PathPlot3) ;
     

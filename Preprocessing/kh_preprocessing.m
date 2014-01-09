@@ -2,9 +2,9 @@
 
 function ForAllPat ()
     
-    PatientFolder = 'C:\Kirsten\DatenDoktorarbeit\Patienten\'
+    PatientFolder = 'D:\kirsten_thesis\data\patients\'
     PatientList = dir( PatientFolder );
-    VolunteerFolder = 'C:\Kirsten\DatenDoktorarbeit\Kontrollen\';
+    VolunteerFolder = 'D:\kirsten_thesis\data\controls\';
     VolunteerList = dir( VolunteerFolder );
     
     for i = 1 : size (VolunteerList)
@@ -18,8 +18,8 @@ end
 
 function [Path, PatientName] = Main_Preprocessing  ( PatientPath, PatientName)
 
- % Reject all other but zzz_sc_Strobl
-        if ( 0 == strcmp (PatientPath, 'C:\Kirsten\DatenDoktorarbeit\Kontrollen\zzz_ka_Kellermann'))
+ % Reject all other but ...
+        if ( 0 == strcmp (PatientPath, 'D:\kirsten_thesis\data\controls\zzz_si'))
             return;
         end
         
