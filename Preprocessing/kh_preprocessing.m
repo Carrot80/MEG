@@ -43,6 +43,5 @@ function RejectArtifacts (Path, Data)
         RejectComponent (Path, 'Comp_ica', 'data_pb1_95nojumps')
 
 
-
 end
 
