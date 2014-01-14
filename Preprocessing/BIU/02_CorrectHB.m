@@ -6,16 +6,16 @@ function ForAllPat ()
     VolunteerFolder = 'D:\kirsten_thesis\data\controls\';
     VolunteerList = dir( VolunteerFolder );
     
-    for i = 6 : size (VolunteerList)
+    for i = 1 : size (VolunteerList)
         if ( 0 == strcmp( VolunteerList(i,1).name, '.') && 0 == strcmp( VolunteerList(i,1).name, '..'))
-            Correct_HB_BIU ( strcat(VolunteerFolder, VolunteerList(i,1).name), VolunteerList(i,1).name  ) ;
+            BIUCorrectHB ( strcat(VolunteerFolder, VolunteerList(i,1).name), VolunteerList(i,1).name  ) ;
         end
     end
 end
 
 
 
-function Correct_HB_BIU (PatientPath, PatientName)
+function BIUCorrectHB (PatientPath, PatientName)
 
 % use this function if initial heartbeatcleaning did not work
 
@@ -31,7 +31,8 @@ function Correct_HB_BIU (PatientPath, PatientName)
     fileName = strcat(Path.DataInput, filesep, 'n_c,rfhp0.1Hz');
     
     [cleanData,temp2e,period4,MCG,Rtopo]=correctHB(fileName,[], 1);
-    rewrite_pdf(cleanData,[],[],'xc,lf,hb')
+    cd Path.DataInput
+    rewrite_pdf(cleanData,[],[],'xc,lf,hb') % error message here "bad pdf name", beachte 'pwd'
 
 end
 

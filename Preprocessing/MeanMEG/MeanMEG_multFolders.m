@@ -53,7 +53,7 @@ function [Path, PatientName] = MeanMEGmultFolders  ( PatientPath, PatientName)
         % plot the mean MEG:
 
            %  fileName        = strcat ( Path.DataInput, '\',  'n_c,rfhp0.1Hz')  ;
-            fileName        =  'n_c,rfhp0.1Hz'
+            fileName        =  'n_c,rfhp0.1Hz' ;
             p               = pdf4D(fileName) ;
             chi             = channel_index( p, 'meg' ) ;
             data            = read_data_block( p, [], chi ) ;
