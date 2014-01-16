@@ -58,9 +58,18 @@ function LfHbCleaning (SubjectName, Path)
     [cleanData,temp2e,period4,MCG,Rtopo]=correctHB(origFile,[], 1);
     kh_rewrite_pdf(cleanData,[], origFile,'hb') 
     
+    handles=findall(0,'type','figure')
+    for i=1:length(handles)
+        FigNum=num2str(i)
+        PathFigure = strcat (Path.DataInput, filesep, 'Hb_Cleaning_Fig', FigNum') % evtl. mit sprintf versuchen?
+        h=figure(i)
+        saveas(h, PathFigure, 'fig')  
+    end
+    close all
+    
     % Line Frequency Cleaning
    
-    LFcleanedData = LFcleanNoCue(HbCleanedFile) ;
+    LFcleanedData = LFcleanNoCue(HbCleanedFile) ;  % zzz_md does not fine FIXME.m 
     kh_rewrite_pdf(LFcleanedData,[], HbCleanedFile,'lf') 
     
     PathFigure = strcat (Path.DataInput, filesep, 'Lf_Hb_Cleaning') ;
@@ -71,13 +80,12 @@ function LfHbCleaning (SubjectName, Path)
 %     [FourRef,Fref]=fftBasic(LFcleanedData,round(1017.25)); 
 %      plot(FourRef, Fref)
     
-    % Try Cleaning Train Frequency :
+    %  Cleaning Train Frequency : noch für alle fehlenden einbauen:
     [TrainCleanData,whereUp]=LFcleanNoCue(LfHbCleanedFile,1017.25,'time', 'ADAPTIVE',16.666666666666666666667) ;
     kh_rewrite_pdf(TrainCleanData,[], LfHbCleanedFile,'tr') 
     PathTrFigure = strcat (Path.DataInput, filesep, 'Tr_Cleaning') ;
     saveas(gcf, PathTrFigure, 'fig')  
-       
-    
+        
 end
 
 
