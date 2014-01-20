@@ -34,6 +34,10 @@ function LfHbCleaning (SubjectName, Path)
 
  % Reject ...
         if        ( 1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_md')...
+                  ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_mf')...
+                  ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_ms')...
+                  ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_sf')...
+                  ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_si'))
 %                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_01_13021km')... % worked with doing lf-cleaning first
 %                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_04_13015st')...
 %                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_08_13026pj')... % worked with doing lf-cleaning first
@@ -41,49 +45,51 @@ function LfHbCleaning (SubjectName, Path)
 %                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_19_13055eg')... % worked with doing lf-cleaning first
 %                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_20_12049fc')... % worked with doing lf-cleaning first
 %                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_23_13062ns'))   % worked with doing lf-cleaning first
-%             return;
-%         end
+            return;
+        end
         
 
 %  if initial heartbeatcleaning did not work and for lf-cleaning
 
      origFile         = strcat(Path.DataInput, 'c,rfhp0.1Hz')    
-     HbCleanedFile    = strcat(Path.DataInput, 'hb_c,rfhp0.1Hz'); 
-     LfHbCleanedFile = strcat(Path.DataInput, 'lf,hb_c,rfhp0.1Hz'); 
+     LfCleanedFile    = strcat(Path.DataInput, 'lf_c,rfhp0.1Hz'); 
+     HbLfCleanedFile = strcat(Path.DataInput, 'hb,lf_c,rfhp0.1Hz'); 
      
-     if exist (HbCleanedFile, 'file')
+     if exist (LfCleanedFile, 'file')
          return
      end
      
-%     if exist(HbCleanedFile, 'file')
-%        LfCleaning (SubjectName, Path) % only done if HbCleanedFile already exist
-%        return
-%     end        
-        
-   
-    close all
-    % HeartbeatCleaning:
-    [cleanData,temp2e,period4,MCG,Rtopo]=correctHB(origFile,[], 1);
-    kh_rewrite_pdf(cleanData,[], origFile,'hb') 
+          if exist (LfCleanedFile, 'file')
+         return
+     end
+    cd (Path.DataInput)
     
-    handles=findall(0,'type','figure')
-    for i=1:length(handles)
-        FigNum=num2str(i)
-        PathFigure = sprintf('%sHb_Cleaning_Fig%s' , Path.DataInput, FigNum);
-        h=figure(i)
-        saveas(h, PathFigure, 'fig')  
-    end
-    close all
+   % Line Frequency Cleaning:
     
-    % Line Frequency Cleaning, did not work for zzz_md and zzz_mf, zzz_ms,
-    % zzz_sf, zzz_si
-   
-    LFcleanedData = LFcleanNoCue(HbCleanedFile) ;  % zzz_md does not fine FIXME.m 
-    kh_rewrite_pdf(LFcleanedData,[], HbCleanedFile,'lf') 
+    LFcleanedData = LFcleanNoCue(origFile) ;  
+    kh_rewrite_pdf(LFcleanedData,[], origFile,'lf') 
     
-    PathFigure = strcat (Path.DataInput, 'Lf_Hb_Cleaning') ;
+    PathFigure = strcat (Path.DataInput, 'Lf_Cleaning') ;
     saveas(gcf, PathFigure, 'fig')  
     close all
+    
+    
+    
+    
+    % HeartbeatCleaning:
+%     [cleanData,temp2e,period4,MCG,Rtopo]=correctHB(origFile,[], 1);
+%     kh_rewrite_pdf(cleanData,[], origFile,'hb') 
+%     
+%     handles=findall(0,'type','figure')
+%     for i=1:length(handles)
+%         FigNum=num2str(i)
+%         PathFigure = sprintf('%sHb_Cleaning_Fig%s' , Path.DataInput, FigNum);
+%         h=figure(i)
+%         saveas(h, PathFigure, 'fig')  
+%     end
+%     close all
+    
+    
     
    %   Frequency Spectrum:   
 %     [FourRef,Fref]=fftBasic(LFcleanedData,round(1017.25)); 
