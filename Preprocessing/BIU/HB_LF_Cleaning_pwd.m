@@ -1,4 +1,4 @@
-    origFile         = strcat(pwd, filesep, 'n_c,rfhp0.1Hz')    
+    origFile         = strcat(pwd, filesep, 'tr_lf_c,rfhp0.1Hz')    
      HbCleanedFile    = strcat(pwd, filesep, 'hb_n_c,rfhp0.1Hz'); 
      LfHbCleanedFile = strcat(pwd, filesep, 'lf,hb_n_c,rfhp0.1Hz'); 
        
@@ -14,9 +14,11 @@
         saveas(h, PathFigure, 'fig')  
     end
     close all
+    clear all
     
     % Line Frequency Cleaning, did not work for zzz_md and zzz_mf, zzz_ms,
     % zzz_sf, zzz_si
+    
     origFile         = strcat(pwd, filesep, 'n_c,rfhp0.1Hz')    
     LFcleanedData = LFcleanNoCue(origFile) ;  % zzz_md not fine FIXME.m 
     kh_rewrite_pdf(LFcleanedData,[], origFile,'lf') ;

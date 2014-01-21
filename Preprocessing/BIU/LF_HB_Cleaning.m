@@ -33,20 +33,10 @@ end
 function LfHbCleaning (SubjectName, Path)
 
  % Reject ...
-        if        ( 1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_md')...
-                  ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_mf')...
-                  ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_ms')...
-                  ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_sf')...
-                  ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_si'))
-%                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_01_13021km')... % worked with doing lf-cleaning first
-%                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_04_13015st')...
-%                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_08_13026pj')... % worked with doing lf-cleaning first
-%                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_17_13060ec')...
-%                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_19_13055eg')... % worked with doing lf-cleaning first
-%                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_20_12049fc')... % worked with doing lf-cleaning first
-%                 ||  1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_23_13062ns'))   % worked with doing lf-cleaning first
-            return;
-        end
+%         if        ( 1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_md'))
+%                  
+%             return;
+%         end
         
 
 %  if initial heartbeatcleaning did not work and for lf-cleaning

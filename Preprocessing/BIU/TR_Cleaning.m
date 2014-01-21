@@ -4,8 +4,8 @@ function for_all_subjects
     PatientFolder = 'D:\kirsten_thesis\data\patients\';
     ControlsFolder = 'D:\kirsten_thesis\data\controls\';
     
-    SelectSubjects (ControlsFolder)
-%     SelectSubjects (PatientFolder)
+%     SelectSubjects (ControlsFolder)
+    SelectSubjects (PatientFolder)
     
 end
 
@@ -45,12 +45,17 @@ function TrCleaning (SubjectName, Path)
          return
      end
      
+     if ~exist (origFile, 'file')
+         return
+     end
+     
 
     cd (Path.DataInput)
     
    % Line Frequency Cleaning:
     
     [CleanData,whereUp]=LFcleanNoCue(origFile,1017.25,'time', 'ADAPTIVE',17.0) ;
+   
     kh_rewrite_pdf(CleanData,[], origFile,'tr') 
     
     PathFigure = strcat (Path.DataInput, 'tr_Cleaning') ;
