@@ -1,0 +1,14 @@
+
+trig=readTrig_BIU;
+trig=double(bitand(uint16(trig),4224));
+trigSh=zeros(size(trig));
+trigSh(2:end)=trig(1:end-1);
+trigOnset=find((trig-trigSh)>0);
+offset=round(0.3*1017.25);
+trl=trigOnset';
+trl
+cfg=[];
+cfg.method='summary'; %trial
+cfg.channel='MEG';
+cfg.alim=1e-12;
+datacln=ft_rejectvisual(cfg, dataca);

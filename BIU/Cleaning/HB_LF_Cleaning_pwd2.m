@@ -7,7 +7,7 @@
     saveas(gcf, PathFigure, 'fig')  
     close all
 
-    [cleanData,temp2e,period4,MCG,Rtopo]=correctHB('lf_n_c,rfhp0.1Hz',[], 1);
+    [cleanData,temp2e,period4,MCG,Rtopo]=correctHB('lf_c,rfhp0.1Hz',[], 1);
     kh_rewrite_pdf(cleanData,[], 'lf_n_c,rfhp0.1Hz','hb') 
     
      handles=findall(0,'type','figure')

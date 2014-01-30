@@ -7,8 +7,8 @@ function [trl] = kh_get_Trig(cfg)
 % cfg.channel = 'TRIGGER';
 cfg.trialdef.eventtype  = 'TRIGGER'
 cfg.trialdef.eventvalue = 4224
-cfg.trialdef.prestim    = 1.0
-cfg.trialdef.poststim   = 1.5
+cfg.trialdef.prestim    = 0.5
+cfg.trialdef.poststim   = 1.0
 
 % read trigger/response channel from data
 
