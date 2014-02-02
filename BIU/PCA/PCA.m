@@ -80,7 +80,7 @@ fileName = 'hb_lf_c,rfhp0.1Hz'
     
     
    
-    
+    % cfg.trials=find(ismember(trl(:,1),datacln.sampleinfo(:,1)));
     % now: reject visual (summary) and averaging
     
     cfg                                 = [];
@@ -123,6 +123,7 @@ ft_singleplotER(cfg,avg);
 
 % Yuval:
 avgBL=correctBL(avg,[-0.1,0]);
+save avgBL avgBL
 figure
 ft_singleplotER(cfg,avgBL);
 cfg

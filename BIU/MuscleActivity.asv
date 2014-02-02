@@ -38,16 +38,15 @@ end
 function RemoveMuscle (SubjectName, Path)
 
  % Reject all other but ...
-%         if ( 1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_ht'))
-%             return;
-%         end
+        if ( 1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_ht'))
+            return;
+        end
         
      FileNameGoodTrials = strcat(Path.Preprocessing, filesep, 'GoodTrials.mat')
      if exist(FileNameGoodTrials, 'file')
          return
      end
     
-     
      [fileName]=PathForFileName(SubjectPath, SubjectName)
      
     
@@ -114,49 +113,10 @@ function RemoveMuscle (SubjectName, Path)
      else 
          PathSubdir = strcat(Path.DataInput, filesep, '1')
          if exist (PathSubdir, 'dir')
-             PathfileNameHBcor=strcat(PathSubdir, filesep, 'hb_tr_lf_c,rfhp0.1Hz') ;
-             PathfileNameHBcorNoTr=strcat(PathSubdir, filesep,'hb_lf_c,rfhp0.1Hz') ;
-             PathfileNameNoHBcor=strcat(PathSubdir, filesep,'tr_lf_c,rfhp0.1Hz') ;
-             PathfileNameLfcor=strcat(PathSubdir, filesep,'lf_c,rfhp0.1Hz') ;
-             
-             if exist (PathfileNameHBcor, 'file')
-                 fileName = PathfileNameHBcor
-                 
-             elseif exist (PathfileNameHBcorNoTr, 'file')
-                 fileName = PathfileNameHBcorNoTr
-              
-             elseif exist (PathfileNameNoHBcor, 'file')
-                 fileName = PathfileNameNoHBcor
-                 
-             elseif exist (PathfileNameLfcor, 'file')
-                 fileName = PathfileNameLfcor    
-                 
-             end     
+             fileName = strcat (Path.DataInput, filesep, ''1''hb_tr_lf_c,rfhp0.1Hz') ;
          else 
-             PathSubdir = strcat(Path.DataInput, filesep, '2')
-             
-         if exist (PathSubdir, 'dir')
-             PathfileNameHBcor=strcat(PathSubdir, filesep, 'hb_tr_lf_c,rfhp0.1Hz') ;
-             PathfileNameHBcorNoTr=strcat(PathSubdir, filesep,'hb_lf_c,rfhp0.1Hz') ;
-             PathfileNameNoHBcor=strcat(PathSubdir, filesep,'tr_lf_c,rfhp0.1Hz') ;
-             PathfileNameLfcor=strcat(PathSubdir, filesep,'lf_c,rfhp0.1Hz') ;
-             
-             if exist (PathfileNameHBcor, 'file')
-                 fileName = PathfileNameHBcor
-                 
-             elseif exist (PathfileNameHBcorNoTr, 'file')
-                 fileName = PathfileNameHBcorNoTr
-              
-             elseif exist (PathfileNameNoHBcor, 'file')
-                 fileName = PathfileNameNoHBcor
-                 
-             elseif exist (PathfileNameLfcor, 'file')
-                 fileName = PathfileNameLfcor    
-                 
-             else
-                return
-             
-             end
-         end
+         return
+     end    
+        
     end
 
