@@ -131,27 +131,27 @@ function RemoveMuscle (SubjectName, Path)
              elseif exist (PathfileNameLfcor, 'file')
                  fileName = PathfileNameLfcor    
                  
-             end     
-         else 
-             PathSubdir = strcat(Path.DataInput, filesep, '2')
-             
-         if exist (PathSubdir, 'dir')
-             PathfileNameHBcor=strcat(PathSubdir, filesep, 'hb_tr_lf_c,rfhp0.1Hz') ;
-             PathfileNameHBcorNoTr=strcat(PathSubdir, filesep,'hb_lf_c,rfhp0.1Hz') ;
-             PathfileNameNoHBcor=strcat(PathSubdir, filesep,'tr_lf_c,rfhp0.1Hz') ;
-             PathfileNameLfcor=strcat(PathSubdir, filesep,'lf_c,rfhp0.1Hz') ;
-             
-             if exist (PathfileNameHBcor, 'file')
-                 fileName = PathfileNameHBcor
-                 
-             elseif exist (PathfileNameHBcorNoTr, 'file')
-                 fileName = PathfileNameHBcorNoTr
-              
-             elseif exist (PathfileNameNoHBcor, 'file')
-                 fileName = PathfileNameNoHBcor
-                 
-             elseif exist (PathfileNameLfcor, 'file')
-                 fileName = PathfileNameLfcor    
+                  
+%          else 
+%              PathSubdir = strcat(Path.DataInput, filesep, '2')
+%              
+%          if exist (PathSubdir, 'dir')
+%              PathfileNameHBcor=strcat(PathSubdir, filesep, 'hb_tr_lf_c,rfhp0.1Hz') ;
+%              PathfileNameHBcorNoTr=strcat(PathSubdir, filesep,'hb_lf_c,rfhp0.1Hz') ;
+%              PathfileNameNoHBcor=strcat(PathSubdir, filesep,'tr_lf_c,rfhp0.1Hz') ;
+%              PathfileNameLfcor=strcat(PathSubdir, filesep,'lf_c,rfhp0.1Hz') ;
+%              
+%              if exist (PathfileNameHBcor, 'file')
+%                  fileName = PathfileNameHBcor
+%                  
+%              elseif exist (PathfileNameHBcorNoTr, 'file')
+%                  fileName = PathfileNameHBcorNoTr
+%               
+%              elseif exist (PathfileNameNoHBcor, 'file')
+%                  fileName = PathfileNameNoHBcor
+%                  
+%              elseif exist (PathfileNameLfcor, 'file')
+%                  fileName = PathfileNameLfcor    
                  
              else
                 return

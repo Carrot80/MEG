@@ -1,4 +1,4 @@
-    origFile         = strcat(pwd, filesep, 'tr_lf_c,rfhp0.1Hz')    
+    origFile         = strcat(pwd, filesep, 'hb_tr_lf_c,rfhp0.1Hz')    
      HbCleanedFile    = strcat(pwd, filesep, 'hb_n_c,rfhp0.1Hz'); 
      LfHbCleanedFile = strcat(pwd, filesep, 'lf,hb_n_c,rfhp0.1Hz'); 
        
@@ -23,7 +23,7 @@
     LFcleanedData = LFcleanNoCue(origFile) ;  % zzz_md not fine FIXME.m 
     kh_rewrite_pdf(LFcleanedData,[], origFile,'lf') ;
     
-    [TrainCleanData,whereUp]=LFcleanNoCue('lf_n_c,rfhp0.1Hz',1017.25,'time', 'ADAPTIVE',150) ;
+    [TrainCleanData,whereUp]=LFcleanNoCue('hb_tr_lf_c,rfhp0.1Hz',1017.25,'time', 'ADAPTIVE',50) ;
       kh_rewrite_pdf(TrainCleanData,[], 'lf_n_c,rfhp0.1Hz','lf') ;
       
     [cleanData,temp2e,period4,MCG,Rtopo]=correctHB('lf_lf_n_c,rfhp0.1Hz',[], 1);
