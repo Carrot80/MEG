@@ -28,7 +28,7 @@ LR=grandavgBL_controls_keepInd_diff_left;
 LR.individual(:,116:230,:)=grandavgBL_controls_keepInd_diff_right.individual;
 LR.label(116:230,1)=grandavgBL_controls_keepInd_diff_right.label;
 
-layout = ft_prepare_layout(cfg, data)
+%  layout = ft_prepare_layout(cfg, data)
 
 %%
 % verify left and right:

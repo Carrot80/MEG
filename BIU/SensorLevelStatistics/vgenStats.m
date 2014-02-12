@@ -9,23 +9,57 @@ gaLR.individual(:,Ri,:)=abs(ga.individual(:,Ri,:))-abs(ga.individual(:,Li,:));
 
 aliceTtest0(gaLR, 0.4, 1);
 vgenTtest0(gaLR, 0.4, 1,0.001,ga); % Input Nr. 3 = p-value, use fieldtrip-version from BIU
-vgenTtest0(gaLR, 0.2, 1,0.01,ga);
+vgenTtest0(gaLR, 0.17, 1,0.01,ga);
 vgenTtest0(gaLR, 0.3, 1,0.05,ga);
 
 
 % compute RMS
 rmsL=squeeze(sqrt(mean(ga.individual(:,Li,:).^2,2)));
 rmsR=squeeze(sqrt(mean(ga.individual(:,Ri,:).^2,2)));
-
-t=0.4;[~,p] = ttest(rmsL(:,nearest(ga.time,t)),rmsR(:,nearest(ga.time,t)));
-
+rmsbothHem=squeeze(sqrt(mean(ga.individual(:,:,:).^2,2)));
+s0=nearest(ga.time,0);
+s700=nearest(ga.time,0.7);
+p=ones(1, 1503);
+for si=s0:s700
+[~,p(si)] = ttest(rmsL(:,si),rmsR(:,si));
+end
+sig=find(p<0.05);
 figure;plot(ga.time,mean(rmsL),'r')
 hold on
 plot(ga.time,mean(rmsR))
-legend('L','R')
+plot(ga.time(sig),1.1*squeeze(max(mean(rmsL))),'k*');
+legend('L','R','sig')
 
 t1=0.32;s1=nearest(ga.time,t1);
 t2=0.47;s2=nearest(ga.time,t2);
 areaL=trapz(ga.time(s1:s2),rmsL(:,s1:s2)');
 areaR=trapz(ga.time(s1:s2),rmsR(:,s1:s2)');
 [~,p]=ttest(areaL,areaR)
+
+hRi=area(ga.time(s1:s2),mean(rmsL(:,s1:s2)));
+set(hRi,'FaceColor','r','EdgeColor','r')
+hLi=area(ga.time(s1:s2),mean(rmsR(:, s1:s2)));
+set(hLi,'FaceColor','w','EdgeColor','w')
+
+
+%%
+
+cfg=[];
+cfg.method='RMS';
+cfg.neighbours='all';
+gadomRMSall=clustData(cfg,gadom);
+gasubRMSall=clustData(cfg,gasub);
+
+timelim=[0.32 0.47];
+samp1=nearest(rmsL,timelim(1));
+samp2=nearest(rmsL,timelim(2));
+timeline=rmsL.time(1,samp1:samp2);
+Lcurve=squeeze(rmsL.individual(:,1,samp1:samp2))';
+Rcurve=squeeze(rmsR.individual(:,1,samp1:samp2))';
+LArea=trapz(timeline,Lcurve);
+RArea=trapz(timeline,Rcurve);
+[~,b]=ttest(LArea,RArea)
+hR=area(timeline,mean(RArea,2));
+set(R,'FaceColor','r','EdgeColor','r')
+hL=area(timeline,mean(Lcurve,2));
+set(hL,'FaceColor','w','EdgeColor','w')
