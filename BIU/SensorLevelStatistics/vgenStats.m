@@ -1,3 +1,4 @@
+% Sensor Level analysis:
 % Compute Diff between abs left and right values
 ga=grandavgBL_controls_keepInd;
 [~,Li]=ismember(LRpairs(:,1),ga.label); % ga ) grandaverage with individually kept trials, LRpairs is file from Yuval
@@ -13,15 +14,15 @@ vgenTtest0(gaLR, 0.17, 1,0.01,ga);
 vgenTtest0(gaLR, 0.3, 1,0.05,ga);
 
 
-% compute RMS
+% compute RMS => not necessary for planar gradiometer
 rmsL=squeeze(sqrt(mean(ga.individual(:,Li,:).^2,2)));
 rmsR=squeeze(sqrt(mean(ga.individual(:,Ri,:).^2,2)));
 rmsbothHem=squeeze(sqrt(mean(ga.individual(:,:,:).^2,2)));
-s0=nearest(ga.time,0);
+s0=nearest(ga.time,0); % BIU_fieldtrip has to be added
 s700=nearest(ga.time,0.7);
-p=ones(1, 1503);
+p=ones(1, length(rmsL));
 for si=s0:s700
-[~,p(si)] = ttest(rmsL(:,si),rmsR(:,si));
+[~,p(si)] = ttest(rmsL(:,si),rmsR(:,si)); % BIU_fieldtrip has to be added
 end
 sig=find(p<0.05);
 figure;plot(ga.time,mean(rmsL),'r')
@@ -31,7 +32,7 @@ plot(ga.time(sig),1.1*squeeze(max(mean(rmsL))),'k*');
 legend('L','R','sig')
 
 t1=0.32;s1=nearest(ga.time,t1);
-t2=0.47;s2=nearest(ga.time,t2);
+t2=0.6;s2=nearest(ga.time,t2);
 areaL=trapz(ga.time(s1:s2),rmsL(:,s1:s2)');
 areaR=trapz(ga.time(s1:s2),rmsR(:,s1:s2)');
 [~,p]=ttest(areaL,areaR)
@@ -40,6 +41,8 @@ hRi=area(ga.time(s1:s2),mean(rmsL(:,s1:s2)));
 set(hRi,'FaceColor','r','EdgeColor','r')
 hLi=area(ga.time(s1:s2),mean(rmsR(:, s1:s2)));
 set(hLi,'FaceColor','w','EdgeColor','w')
+title(strcat('Area Under Curve - p<0.05'))
+
 
 
 %%
