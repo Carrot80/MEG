@@ -65,8 +65,8 @@ cfg.prefix = str_timeInt; % change prefix
 VS2Brik(cfg,1e+13*(sum_vs_IntOfIn')); % =>creates ERF+orig.Brik+Head 
 
 NewFileName = strcat(str_timeInt,'+orig');
-%  disp(['!@auto_tlrc -apar orthoMNI152T+tlrc -input ', NewFileName,' -dxyz 5']) % 
-eval(['!@auto_tlrc -apar orthoMNI152T+tlrc -input ', NewFileName,' -dxyz 5']) % 
+%  disp(['!@auto_tlrc -apar orthoMNI_avg152T+tlrc -input ', NewFileName,' -dxyz 5']) % 
+eval(['!@auto_tlrc -apar orthoMNI_avg152T+tlrc -input ', NewFileName,' -dxyz 5']) % 
 
 
 end
