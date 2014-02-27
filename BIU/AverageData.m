@@ -1,7 +1,7 @@
 
 function for_all_subjects  
 
-    PatientFolder = 'D:\kirsten_thesis\data\patients\';
+%     PatientFolder = 'D:\kirsten_thesis\data\patients\';
     ControlsFolder = 'D:\kirsten_thesis\data\controls\';
     
 %      SelectSubjects (ControlsFolder)
@@ -69,13 +69,13 @@ function FilterData (SubjectName, Path)
     
     cfg_trl.channel     = 'MEG' ;
     cfg_trl.bpfilter    = 'yes' ;
-    cfg_trl.bpfreq      = [1 50] ;
+    cfg_trl.bpfreq      = [1 45] ;
     cfg_trl.demean      = 'yes';
     cfg_trl.blcwindow   = [-0.1 0];
     cfg_trl.padding     = 1;
     DataBp1_50Hz    = ft_preprocessing(cfg_trl) ;
     
-    File_DataBp1_50Hz = strcat (Path.Preprocessing, filesep, 'DataBp1_50Hz.mat');
+    File_DataBp1_50Hz = strcat (Path.Preprocessing, filesep, 'DataBp1_45Hz.mat');
     save (File_DataBp1_50Hz, 'DataBp1_50Hz')  
     
 
