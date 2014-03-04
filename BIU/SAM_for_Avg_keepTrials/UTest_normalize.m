@@ -7,7 +7,7 @@ DIR = dir (ControlsFolder)
 isub = [DIR(:).isdir]; %  returns logical vector
 nameFolds = {DIR(isub).name}';
 nameFolds(ismember(nameFolds,{'.','..'})) = [];
-TimeInt = [0.4, 0.6];
+TimeInt = [0.32, 0.6];
 
 for i= 1:size(nameFolds)
     
@@ -23,10 +23,10 @@ end
 function kh_UTest_normalize (SubjectPath, SubjectName, TimeInt)
 
 % 
-% SubjectToAnalyse = '/home/kh/data/controls_SAM/zzz_wi';
-% if 1 == strcmp (SubjectPath, SubjectToAnalyse)
-%     return
-% end
+SubjectToAnalyse = '/home/kh/data/controls_SAM/zzz_ms';
+if 0 == strcmp (SubjectPath, SubjectToAnalyse)
+    return
+end
 
 
 Path = strcat (SubjectPath, filesep, 'keptTrials');
