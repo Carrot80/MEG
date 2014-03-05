@@ -11,8 +11,10 @@ SAM_Timeinterval % calculates mean activity for time intervals
 (ERF_transform2MNIspace.m) % nachträgliche transformation der funktionellen Daten zum MNI space, da vorher falsches template verwendet
 Reduce_ERF2Brain01.m % reduces die ERF activity which expands the brain after MNI Normalization back to Brain Volume size
 kh_z_scoreNormalizationERF.m 
-% creating AVG for  all controls:
-kh_avg
+
+
+% U-Tst for all controls:
+kh_avg % creating AVG for  all controls:
 LR_ttest % U-Test for Left and Right Hemisphere created by Yuval
 
 smaller_timeintervals.m % includes Reduce_ERF2Brain01.m and kh_z_scoreNormalizationERF.m 
@@ -28,15 +30,15 @@ ROIMaskrecalc.m % has to recalc right ROI, as it does not consist of values of o
 ROI_Analysis.m % looks for extrem values for each ROI and saves to Textfile
 loadTextComputeLI.m % computes LIs of maximum values
 extractActROI.m % extrahiert Aktivität aller Voxel aus ROI
+extractfullActROI
 
-% Wiederholung für AVGTrials, um U-Test pro Subject durchzuführen:
 
-kh_SAM_Beamforming_keepttrials.m
-
-LR_ttest_ind.m
-UTest_normalize.m
-extract_UValuesROI.m
-% anschließend 01
+% U-Test für einzelne Subjects: WICHTIG
+kh_SAM_Beamforming_keepttrials.m % Wiederholung für AVGTrials, mitteln von 10er Gruppen
+LR_ttest_ind.m % U-Test für verschiedene Zeitintervalle
+UTest_normalize.m % NOrmalisierung in MNI space
+extract_UValuesROI.m % Berechnung des LI-Wertes
+kh_collect_LI % sammeln der Werte für alle Subjects in einer Matrix
 
 
 % Nützliche Skripte:
