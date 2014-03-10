@@ -25,8 +25,10 @@ LRttest
 
 Create_ROI
 FlipROI % flips left ROI to right Hemisphere
-ROIMaskrecalc.m % has to recalc right ROI, as it does not consist of values of one after sampling, but of 0,..7. Recalculated to resample values of 1
+ROIMaskrecalc.m % after flipping ROI, one has to recalc right ROI, as it does not consist of values of ones after sampling, but of 0,..7. Recalculated to resample values of 1
+ReMasterROI.m % ROI muss resampled werden, damit sie gleiche Auflösung hat
 
+% ROI Analysis
 ROI_Analysis.m % looks for extrem values for each ROI and saves to Textfile
 loadTextComputeLI.m % computes LIs of maximum values
 extractActROI.m % extrahiert Aktivität aller Voxel aus ROI
@@ -34,12 +36,13 @@ extractfullActROI
 
 
 % U-Test für einzelne Subjects: WICHTIG
-kh_SAM_Beamforming_keepttrials.m % Wiederholung für AVGTrials, mitteln von 10er Gruppen
-LR_ttest_ind.m % U-Test für verschiedene Zeitintervalle
+kh_SAM_Beamforming_keepttrials.m % Wiederholung für AVGTrials, mitteln von 10er Gruppen;
+LR_ttest_ind.m % U-Test für verschiedene Zeitintervalle; Linke vs. rechte Hemisphere, hier nohc keine ROIextraction
 UTest_normalize.m % NOrmalisierung in MNI space
-extract_UValuesROI.m % Berechnung des LI-Wertes
+extract_UValuesROI.m % Berechnung des LI-Wertes für ROIs
 kh_collect_LI % sammeln der Werte für alle Subjects in einer Matrix
 
+LR_UTest_ind_UValues.m % the same as LR_ttest_ind, except for that I wanted to get stats (z-value)
 
 % Nützliche Skripte:
 

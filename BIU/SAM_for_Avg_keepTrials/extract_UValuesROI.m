@@ -13,34 +13,36 @@ function for_all ()
 
     for i= 1:size(nameFolds)
         
-    TimeInt = [.4, .6];
+    TimeInt = [.23, .31];
         
-        kh_extractActROI(strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, 'Broca_left', 'Broca_right_recalc', 'Broca', TimeInt)
-        kh_extractActROI(strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, 'Wernicke_left', 'Wernicke_right_recalc', 'Wernicke', TimeInt)
-        kh_extractActROI(strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, 'TempInfplusPols_left', 'TempInfplusPols_right_recalc', 'TempInfplusPols', TimeInt)
+        kh_extractActROI(strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, 'Broca_left_dil', 'Broca_right_dil', 'Broca', TimeInt)
+        kh_extractActROI(strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, 'Wernicke_left_dil', 'Wernicke_right_dil', 'Wernicke', TimeInt)
+%         kh_extractActROI(strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, 'TempInfplusPols_left', 'TempInfplusPols_right_recalc', 'TempInfplusPols', TimeInt)
 
     end
 
 end
 
-function kh_extractActROI (SubjectPath, SubjectName, ROI_left, ROI_right, ROIName, TimeInt)
+function kh_extractActROI (SubjectPath, SubjectName,  ROI_left, ROI_right, ROIName, TimeInt)
 
-SubjectToAnalyse = '/home/kh/data/controls_SAM/zzz_ms';
-if 0 == strcmp (SubjectPath, SubjectToAnalyse)
-    return
-end
+% SubjectToAnalyse = '/home/kh/data/controls_SAM/zzz_ms';
+% if 1 == strcmp (SubjectPath, SubjectToAnalyse)
+%     return
+% end
 
+PathUTest = strcat (SubjectPath, filesep, 'UTest', filesep);
+cd (PathUTest)
 
-Path2ROI = strcat( SubjectPath, filesep, 'SAM', filesep);
-Path2UValues = strcat (SubjectPath, filesep, 'keptTrials', filesep, 'Utest_LR_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)), 'sMNI+tlrc' );
+Path2UValues = strcat (SubjectPath, filesep, 'UTest', filesep, 'Utest_LR_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)), 'sMNI+tlrc' );
 
 [V_UValues, Info_UValues] = BrikLoad (Path2UValues);
 
-PathMask_left = strcat (Path2ROI, ROI_left, '+tlrc');
+
+PathMask_left = strcat (PathUTest, ROI_left, '+tlrc');
 [Mask_left, Info_MASK_left] = BrikLoad (PathMask_left);
 
 
-PathMask_right = strcat (Path2ROI, ROI_right, '+tlrc');
+PathMask_right = strcat (PathUTest, ROI_right, '+tlrc');
 [Mask_right, Info_MASK_right] = BrikLoad (PathMask_right);
 
 
@@ -67,9 +69,17 @@ rightAct=V_UValues(Right_Voxels);
  LI.relActRight = length(signRightVoxels)./size(Right_Voxels, 1);
  LI.Max_percchange = (length(signLeftVoxels)-length(signRightVoxels))./length(signRightVoxels);
  LI.Classic = (length(signLeftVoxels)-length(signRightVoxels))./(length(signLeftVoxels)+length(signRightVoxels));
-
+ if LI.Classic >= .1
+      LI.Lateralization = 'left';
+ elseif LI.Classic <= -.1 
+    LI.Lateralization = 'right';
+ elseif LI.Classic > -.1 && LI.Classic < +.1
+ LI.Lateralization = 'bilateral';
+ end
  
- PathFile = strcat (SubjectPath, filesep, 'LI', filesep, 'LI_', ROIName, '_SumOfSignVoxels_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)),  '_s.mat' );
+
+    
+ PathFile = strcat (SubjectPath, filesep, 'UTest', filesep, 'LI_', ROIName, 'dil_SumOfSignVoxels_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)),  '_s.mat' );
  save (PathFile, 'LI')
 
 end

@@ -22,7 +22,7 @@ function TimeIntervall (nameFolds, ControlsFolder)
 VlrAll= [];
 Vall = [];
 
-TimeInt = [.3, .5; .2, .4; .25, .55]; % TimInt unten noch anpassen
+TimeInt = [.32, .6]; % TimInt unten noch anpassen
 
 for i= 1:size(nameFolds)
     SubjectPath = strcat(ControlsFolder, filesep, nameFolds{i,1});
