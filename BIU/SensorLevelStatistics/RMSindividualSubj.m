@@ -17,8 +17,8 @@ function SelectSubjects (Mainfolder)
       if ( 0 == strcmp( List(i,1).name, '.') && 0 == strcmp( List(i,1).name, '..') )
           SubjectPath = strcat(Mainfolder, List(i,1).name) ;
           SubjectName = List(i,1).name  
-            T1 = .4; 
-            T2 = .6;
+            T1 = .32; 
+            T2 = .47;
           [Path] = MakePath(SubjectPath, SubjectName);
           RMS_ind (Path, SubjectName, T1, T2 );
            
@@ -61,13 +61,15 @@ function RMS_ind (Path, SubjectName, T1, T2)
     title(strcat('RMS_', SubjectName));
     
  
-    
+    % area under curve:
     sT1=nearest(ga.time,T1); % BIU_fieldtrip has to be added
     sT2=nearest(ga.time,T2);
     p=ones(1, length(rmsL));
     si=sT1:sT2
    [h,p,ci,stats] = ttest(rmsL(:,si),rmsR(:,si)); % BIU_fieldtrip has to be added
 
+   
+   
     PathFig = strcat (Path.SensorLevelAnalysis, filesep, 'RMS_ind');
     cd (Path.SensorLevelAnalysis)
     saveas (gcf, PathFig, 'fig')

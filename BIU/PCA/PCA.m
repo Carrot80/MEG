@@ -40,14 +40,14 @@ function ConductPCA (SubjectPath, SubjectName)
 
 
  % Reject all other but ...
-        if ( 1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_ca') || 1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_01_13021km') || 1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_12_12041he'))
+        if ( 0 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_ca') || 1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_01_13021km') || 1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_21_13056hz'))
             return;
         end
   PathComp_PCA = strcat( Path.Preprocessing, filesep, 'comp_PCA.mat');
   
-  if exist (PathComp_PCA, 'file')
-      return
-  end
+%   if exist (PathComp_PCA, 'file')
+%       return
+%   end
      
      [fileName]=PathForFileName(SubjectName, Path)   
         
@@ -74,8 +74,8 @@ function ConductPCA (SubjectPath, SubjectName)
     cfg_trl.bpfilter    = 'yes' ;
     cfg_trl.bpfreq      = [1.5 15] ;
     cfg_trl.demean      = 'yes' ; 
-    cfg_trl.blcwindow   = [-0.1 0];
-    cfg_trl.padding     = 1;
+    cfg_trl.blcwindow   = [-0.2 -0.1];
+    cfg_trl.padding     = 10;
 
     DataBp1_15Hz        = ft_preprocessing(cfg_trl) ;
   
@@ -96,16 +96,16 @@ function ConductPCA (SubjectPath, SubjectName)
     % PCA
     cfgc                = [] ;
     cfgc.method         = 'pca';
-    compPCA            = ft_componentanalysis(cfgc, DataBp1_15Hz);
+    compPCA_1_15Hz            = ft_componentanalysis(cfgc, DataBp1_15Hz);
 
 
       % plot the components for visual inspection
     figure
     cfg3                = [];
-    cfg3.component      = [1:6];       % specify the component(s) that should be plotted
+    cfg3.component      = [1:30];       % specify the component(s) that should be plotted
     cfg3.layout         = '4D248.lay'; % specify the layout file that should be used for plotting
     cfg3.comment        = 'no';
-    ft_topoplotIC(cfg3, compPCA)
+    ft_topoplotIC(cfg3, compPCA_1_15Hz)
 
     save (PathComp_PCA, 'compPCA')
     FigComp_PCA = strcat( Path.Preprocessing, filesep, 'compPCA');

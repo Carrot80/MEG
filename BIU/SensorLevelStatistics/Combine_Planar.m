@@ -61,7 +61,7 @@ cfg.combinegrad  = 'yes';
 avgBL_ra_planar = ft_combineplanar(cfg, interp)
 
 cfgp = [];
-cfgp.xlim=[0.4 0.4]; % change
+cfgp.xlim=[0.405 0.405]; % change
 cfgp.layout = '4D248.lay';
 figure;
 ft_topoplotER(cfgp,avgBL_ra_planar)

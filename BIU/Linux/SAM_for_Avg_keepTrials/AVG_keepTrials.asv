@@ -59,8 +59,21 @@ function AvgData (SubjectName, Path, CleanData)
     for a= 1:10
         b=a+1;
         avgTrials.trial(a,:,:) = mean(avg.trial(i(a):j(b),:,:));
+      
+
     end
-   
+    
+    %Baselinecorrection:
+    
+    for i=1:10
+    
+    avgTrialsBL=correctBL(avgTrials.trial,[-0.32 -.02]);
+    
+    
+    end
+    save avgTrials_Pat_07_13033gc_ohneICA avgTrials
+    
+    
 %     PathavgTrials = strcat ('D:\kirsten_thesis\data\all\Results_controls\AVG_keeptrials', filesep, 'avgTrials_', SubjectName, '.mat')
 %     
 %     save (PathavgTrials, 'avgTrials')

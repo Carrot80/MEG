@@ -2,9 +2,9 @@
 function for_all_subjects  
 
     PatientFolder = 'D:\kirsten_thesis\data\patients\';
-    ControlsFolder = 'D:\kirsten_thesis\data\controls\';
+%     ControlsFolder = 'D:\kirsten_thesis\data\controls\';
     
-     SelectSubjects (ControlsFolder)
+%      SelectSubjects (ControlsFolder)
      SelectSubjects (PatientFolder)
 end
 
@@ -19,7 +19,7 @@ function SelectSubjects (Mainfolder)
           SubjectName = List(i,1).name  
           
           [Path] = MakePath(SubjectPath, SubjectName)
-          RemoveMuscle (SubjectName, Path)
+          RemoveMuscle (Path, SubjectName)
           
       end
  end
@@ -35,22 +35,20 @@ function [Path] = MakePath(SubjectPath, SubjectName)
         
 end
 
-function RemoveMuscle (SubjectName, Path)
+function RemoveMuscle (Path, SubjectName)
 
  % Reject all other but ...
 %         if ( 1 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\controls\zzz_ht'))
 %             return;
 %         end
         
-     FileNameGoodTrials = strcat(Path.Preprocessing, filesep, 'GoodTrials.mat')
-     if exist(FileNameGoodTrials, 'file')
-         return
-     end
+%      FileNameGoodTrials = strcat(Path.Preprocessing, filesep, 'GoodTrials.mat')
+%      if exist(FileNameGoodTrials, 'file')
+%          return
+%      end
     
      
-     [fileName]=PathForFileName(SubjectPath, SubjectName)
-     
-    
+     [fileName]=PathForFileName(Path, SubjectName)
      
 
      hdr                     = ft_read_header(fileName) ;
@@ -85,16 +83,17 @@ function RemoveMuscle (SubjectName, Path)
     cfg.critval=3;
     [good,bad]=badTrials(cfg,dataHp60,1)
     
-    FileNameGoodTrials = strcat(Path.Preprocessing, filesep, 'GoodTrials.mat')
+    FileNameGoodTrials = strcat(Path.Preprocessing, filesep, 'GoodTrials_noJumps.mat')
     save (FileNameGoodTrials, 'good')
-    FileNameBadTrials = strcat(Path.Preprocessing, filesep, 'BadTrials.mat')
+    FileNameBadTrials = strcat(Path.Preprocessing, filesep, 'Jumps.mat')
     save (FileNameBadTrials, 'bad')
     
 
-     end
+  end
+      
+      
 
-
-    function      [fileName]=PathForFileName(SubjectPath, SubjectName)
+    function      [fileName]=PathForFileName(Path, SubjectName)
         
     % Muscle activity
      PathfileNameHBcor=strcat(Path.DataInput, filesep,'hb_tr_lf_c,rfhp0.1Hz') ;
@@ -158,5 +157,6 @@ function RemoveMuscle (SubjectName, Path)
              
              end
          end
+     end
     end
 

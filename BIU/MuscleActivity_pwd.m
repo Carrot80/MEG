@@ -1,11 +1,14 @@
-fileName =  'hb_lf_c,rfhp0.1Hz'
-hdr                     = ft_read_header(fileName) ;
+fileName =  'hb_tr_lf_c,rfhp0.1Hz';
+
+
+    hdr                     = ft_read_header(fileName) ;
      cfg = [] ;
      cfg.dataset             = fileName ;
      cfg.channel             = 'MEG' ;
      [Data]                  = ft_definetrial(cfg) ;
 
-hdr                     = ft_read_header(fileName) ;
+     
+    hdr                     = ft_read_header(fileName) ;
      cfg = [] ;
      cfg.dataset             = fileName ;
      cfg.channel             = 'MEG' ;
@@ -17,7 +20,7 @@ hdr                     = ft_read_header(fileName) ;
     cfg.channel     ='MEG';
     cfg.hpfilter    = 'yes';
     cfg.hpfreq      = 60;
-    cfg.padding     = 1;
+    cfg.padding     = 10;
     dataHp60=ft_preprocessing(cfg);
     
     cfg=[];

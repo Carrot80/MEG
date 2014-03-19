@@ -1,6 +1,6 @@
 % Sensor Level analysis:
 % Compute Diff between abs left and right values
-ga=grandavgBL_controls_keepInd;
+ga=grandavgBL_Planar_controls_keepInd;
 [~,Li]=ismember(LRpairs(:,1),ga.label); % ga ) grandaverage with individually kept trials, LRpairs is file from Yuval
 [~,Ri]=ismember(LRpairs(:,2),ga.label);
 gaLR=ga;
@@ -9,7 +9,7 @@ gaLR.individual(:,Li,:)=abs(ga.individual(:,Li,:))-abs(ga.individual(:,Ri,:));
 gaLR.individual(:,Ri,:)=abs(ga.individual(:,Ri,:))-abs(ga.individual(:,Li,:));
 
 aliceTtest0(gaLR, 0.4, 1);
-vgenTtest0(gaLR, 0.4, 1,0.001,ga); % Input Nr. 3 = p-value, use fieldtrip-version from BIU
+vgenTtest0(gaLR, 0.405, 1,0.001,ga); % Input Nr. 3 = p-value, use fieldtrip-version from BIU
 vgenTtest0(gaLR, 0.17, 1,0.01,ga);
 vgenTtest0(gaLR, 0.3, 1,0.05,ga);
 
@@ -31,7 +31,7 @@ plot(ga.time,mean(rmsR))
 plot(ga.time(sig),1.1*squeeze(max(mean(rmsL))),'k*');
 legend('L','R','sig')
 
-t1=0.32;s1=nearest(ga.time,t1);
+t1=0.47;s1=nearest(ga.time,t1);
 t2=0.6;s2=nearest(ga.time,t2);
 areaL=trapz(ga.time(s1:s2),rmsL(:,s1:s2)');
 areaR=trapz(ga.time(s1:s2),rmsR(:,s1:s2)');
