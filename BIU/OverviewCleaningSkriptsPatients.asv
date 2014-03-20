@@ -8,7 +8,7 @@ AverageData.m
 
 % very noisy patients:
 FindingsGoodComponents
-CreatCleanFile.m % hat bei mir nicht funktioniert, kann man aber auch ausprobieren in hartnäckigen Fällen
+CreatCleanFile.m % hat bei mir nicht funktioniert, kann man aber auch ausprobieren in hartnäckigen
 %than
 SAM_get_Trig_patients.m
 

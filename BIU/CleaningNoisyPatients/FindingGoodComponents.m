@@ -1,6 +1,6 @@
   
     
-    %% 
+    %% für Patienten, die kein evoziertes Potential im Butterflot der gemittelten Daten haben: ICA und nur die Komponenten behalten, die besseres SNR haben
     
     cfg            = [] ;
     cfg.resamplefs = 300 ;
@@ -14,7 +14,7 @@
     
     figure
     cfg3                = [];
-    cfg3.component      = [1:20];       % specify the component(s) that should be plotted
+    cfg3.component      = [21:40];       % specify the component(s) that should be plotted
     cfg3.layout         = '4D248.lay'; % specify the layout file that should be used for plotting
     cfg3.comment        = 'no';
     ft_topoplotIC(cfg3, comp_ICA)
@@ -23,7 +23,7 @@
     cfgb                = [];
     cfgb.layout         = '4D248.lay';
     cfgb.channel = {comp_ICA.label{1:5}};
-    cfg.component       = [13:16];
+%     cfg.component       = [13:16];
     comppic             = ft_databrowser(cfgb,comp_ICA);
     
     % nach der ICA wird diese gemittelt:
@@ -42,7 +42,7 @@
     [a,b]=sort(avgCom_tw); % erst einmal sortieren
     
     % finde Komponenten, die SNR größer1.5 aufweisen
-    KompSNR = find(a>1.3);
+    KompSNR = find(a>1.5);
     size(KompSNR,1)
     
 %     KompSNR1_5 = find(a>1.5);

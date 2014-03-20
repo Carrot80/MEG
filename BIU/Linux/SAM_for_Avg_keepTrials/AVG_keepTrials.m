@@ -1,11 +1,11 @@
 
 function for_all_subjects  
 
-%     PatientFolder = 'D:\kirsten_thesis\data\patients\';
-    ControlsFolder = 'D:\kirsten_thesis\data\controls\';
+    PatientFolder = 'D:\kirsten_thesis\data\patients\';
+%     ControlsFolder = 'D:\kirsten_thesis\data\controls\';
     
-     SelectSubjects (ControlsFolder)
-%      SelectSubjects (PatientFolder)
+%      SelectSubjects (ControlsFolder)
+     SelectSubjects (PatientFolder)
 end
 
 
@@ -19,7 +19,7 @@ function SelectSubjects (Mainfolder)
           SubjectName = List(i,1).name  
           
           [Path] = MakePath(SubjectPath, SubjectName)
-          AvgData (SubjectName, Path)
+          AvgData (SubjectName, Path, 'CleanData')
            
 
       end
@@ -36,12 +36,24 @@ function [Path] = MakePath(SubjectPath, SubjectName)
 end
 
 
-function AvgData (SubjectName, Path, CleanData)
+function AvgData (SubjectName, Path, CleanDataFile)
 
- 
-    File_CleanData = strcat (Path.Preprocessing, filesep, 'CleanData.mat');
+ % Reject all other but ...
+        if ( 0 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_03_13014bg'))
+            return;
+        end
+
+    cd (strcat(Path.Subject, filesep, 'MEG\02_PreProcessing'));
+   
+    FileName = strcat('avgTrials_', SubjectName, '.mat');
+    if exist  (FileName,'file')
+        return
+    end
+    
+    File_CleanData = strcat (Path.Preprocessing, filesep, CleanDataFile);
     load (File_CleanData)
     
+    correctBL(CleanData,[-0.32 -.02]);
     cfg = [];
     cfg.keeptrials = 'yes';
     avg = ft_timelockanalysis(cfg, CleanData);
@@ -63,15 +75,9 @@ function AvgData (SubjectName, Path, CleanData)
 
     end
     
-    %Baselinecorrection:
+    FileName = strcat('avgTrials_', SubjectName);
     
-    for i=1:10
-    
-    avgTrialsBL=correctBL(avgTrials.trial(i,:,[-0.32 -.02]);
-    
-    
-    end
-    save avgTrials_Pat_07_13033gc_ohneICA avgTrials
+    save  (strcat('avgTrials_', SubjectName), 'avgTrials')
     
     
 %     PathavgTrials = strcat ('D:\kirsten_thesis\data\all\Results_controls\AVG_keeptrials', filesep, 'avgTrials_', SubjectName, '.mat')

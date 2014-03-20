@@ -40,15 +40,15 @@ end
 function FilterData (SubjectName, Path)
 
  % Reject all other but ...
-        if ( 0 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_20_12049fc'))
+        if ( 0 == strcmp (Path.Subject, 'D:\kirsten_thesis\data\patients\Pat_03_13014bg'))
             return;
         end
 
-     [fileName]=PathForFileName(SubjectName, Path)   
-        
-     if isempty(fileName) 
-         return
-     end
+%      [fileName]=PathForFileName(SubjectName, Path)   
+%         
+%      if isempty(fileName) 
+%          return
+%      end
      
 %     File_AVG = strcat (Path.Preprocessing, filesep, 'avg.mat');
 %     if exist(File_AVG, 'file')
@@ -56,6 +56,8 @@ function FilterData (SubjectName, Path)
 %     end
 
 % define trials:
+
+
     hdr                     = ft_read_header(fileName) ;
     cfg=[];
     cfg.dataset             = fileName ;
@@ -95,7 +97,7 @@ function FilterData (SubjectName, Path)
 %%
     cfgc                = [] ;
     cfgc.method         = 'pca';
-    compPCA            = ft_componentanalysis(cfgc, CleanData_nobadTrls);
+    compPCA            = ft_componentanalysis(cfgc, CleanData);
     
     figure
     cfg3                = [];
@@ -183,7 +185,7 @@ function AvgData (SubjectName, Path, CleanData)
     avg = ft_timelockanalysis(cfg, CleanData_nobadTrls);
     
     cfg = [];
-    avg = ft_timelockanalysis(cfg, CleanDataAll);
+    avg = ft_timelockanalysis(cfg, CleanData);
 
     cfg = [];
     avg = ft_timelockanalysis(cfg, CleanData_rejcomp1);
