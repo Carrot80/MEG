@@ -1,14 +1,15 @@
 function ForAll()
 
 % multiply weigths with avgtrials and normalize
-ControlsFolder = '/home/kh/data/controls_SAM';
+ControlsFolder = '/home/kh/ShareWindows/data/patients/patients_SAM';
 
 DIR = dir (ControlsFolder)
 isub = [DIR(:).isdir]; %# returns logical vector
 nameFolds = {DIR(isub).name}';
 nameFolds(ismember(nameFolds,{'.','..'})) = [];
 
-for i= 4:size(nameFolds,1)
+for i= 19
+% for i= 20:size(nameFolds,1)
     
    kh_SAM( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i})
 
@@ -26,16 +27,22 @@ function kh_SAM(SubjectPath, SubjectName)
 %     return
 % end
 
+NewFolder = strcat(SubjectPath, filesep, 'keptTrials');
+if ~exist(NewFolder, 'dir')
+    mkdir(NewFolder)
+end
 
 % change matlab dir to Path of weights (SAMdir):
-PathSAM = strcat(SubjectPath, filesep, 'keptTrials', filesep);
+PathSAM = strcat(SubjectPath, filesep, 'SAM', filesep);
 cd (PathSAM)
 
-load (strcat (SubjectPath, filesep, 'SAM/Workspace_SAM.mat'));
+[SAMHeader, ActIndex, ActWgts]=readWeights('M400,1-50Hz,VGa.wts');
+
+% load (strcat (SubjectPath, filesep, 'SAM/Workspace_SAM.mat'));
 
 
 % load avg:
-PathAVG = strcat('/home/kh/data/AVG_keeptrials', filesep, 'avgTrials_', SubjectName, '.mat');
+PathAVG = strcat(SubjectPath, filesep, 'avgTrials_', SubjectName, '.mat');
 load(PathAVG)
 
 
@@ -46,6 +53,8 @@ for i=1:length(avgTrials.trial(:,1,1))
     vs=ActWgts*squeeze(avgTrials.trial(i,:,:));
     ns=mean(abs(ActWgts),2);
     vs=vs./repmat(ns,1,size(vs,2));
+    
+    cd(NewFolder)
     
     cfg         = [];
     cfg.step    = 5;
@@ -65,7 +74,7 @@ for i=1:length(avgTrials.trial(:,1,1))
     
 end
 
-% oder nur einzelne files speichern
+
 
 end
 

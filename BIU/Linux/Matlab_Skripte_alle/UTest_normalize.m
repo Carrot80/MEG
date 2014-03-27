@@ -1,7 +1,7 @@
 function forAll()
 
 % dies für alle Patienten nutzen und umbauen
-ControlsFolder = '/home/kh/ShareWindows/data/controls_SAM';
+ControlsFolder = '/home/kh/ShareWindows/data/patients/patients_SAM';
 
 DIR = dir (ControlsFolder)
 isub = [DIR(:).isdir]; %  returns logical vector
@@ -31,7 +31,7 @@ function kh_UTest_normalize (SubjectPath, SubjectName, TimeInt)
 
 % Path = strcat (SubjectPath, filesep, 'keptTrials');
 
-PathName = strcat(SubjectPath, filesep, 'UTestNoNoise');
+PathName = strcat(SubjectPath, filesep, 'keptTrials');
 cd (PathName)
 
 PathUtest = strcat('Utest_LR_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)), 's', '+orig');

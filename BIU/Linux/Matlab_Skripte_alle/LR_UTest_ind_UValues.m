@@ -3,7 +3,7 @@ function for_all ()
 
 % Script written by Yuval:
 
-ControlsFolder = '/home/kh/data/controls_SAM';
+ControlsFolder = '/home/kh/ShareWindows/data/patients/patients_SAM';
 
 DIR = dir (ControlsFolder)
 isub = [DIR(:).isdir]; %  returns logical vector
@@ -22,9 +22,9 @@ function TimeIntervall (nameFolds, ControlsFolder)
 VlrAll= [];
 Vall = [];
 
-TimeInt = [.23, .31]; % TimInt unten noch anpassen
+TimeInt = [.32, .6]; % TimInt unten noch anpassen
 
-for i= 1:size(nameFolds)
+for i= 5:size(nameFolds)
     SubjectPath = strcat(ControlsFolder, filesep, nameFolds{i,1});
     SubjectName = nameFolds{i};
     
@@ -50,7 +50,7 @@ function [VlrAll, Vall] = get_V (SubjectPath, SubjectName, VlrAll, Vall, TimeInt
     Path = strcat(SubjectPath, filesep, 'keptTrials');
     cd (Path)
 
-for i= 1:8
+for i= 1:10
 
 
     FileName = strcat('ERF_avgTrials_', num2str(i), '+orig');
@@ -122,11 +122,11 @@ function UtestLR (SubjectPath, SubjectName, VlrAll, Vall, TimeInt)
         i
     end
 
-    [~, Info] = BrikLoad (strcat(SubjectPath, filesep, 'SAM/', 'ERF_0.4-0.6s_', SubjectName, '+orig')); % Info would be 
+    [~, Info] = BrikLoad (strcat(SubjectPath, filesep, 'TimeIntervalls', filesep, 'ERF_0.32-0.6s_', SubjectName, '+orig')); % Info would be 
     
-    Path = strcat(SubjectPath, filesep, 'keptTrials'); 
-    
+    Path = strcat(SubjectPath, filesep, 'keptTrials');    
     cd (Path)
+    
     
     OptTSOut.Scale = 1;
     OptTSOut.Prefix = strcat('Utest', '_', 'LR', '_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)), 's');
