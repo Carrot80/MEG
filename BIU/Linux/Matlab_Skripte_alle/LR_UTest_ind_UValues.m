@@ -22,17 +22,18 @@ function TimeIntervall (nameFolds, ControlsFolder)
 VlrAll= [];
 Vall = [];
 
-TimeInt = [.32, .6]; % TimInt unten noch anpassen
+TimeInt = [.32, .47]; % TimInt unten noch anpassen
 
-for i= 5:size(nameFolds)
+for i= 1:size(nameFolds)
+% for i= 1:5
     SubjectPath = strcat(ControlsFolder, filesep, nameFolds{i,1});
     SubjectName = nameFolds{i};
     
     [VlrAll, Vall] = get_V (SubjectPath, SubjectName, VlrAll, Vall, TimeInt);
-      
+    
     UtestLR (SubjectPath, SubjectName, VlrAll, Vall, TimeInt)
     
-end   
+end
      
 
 end
@@ -42,10 +43,10 @@ end
 
 function [VlrAll, Vall] = get_V (SubjectPath, SubjectName, VlrAll, Vall, TimeInt)
 
-% SubjectToAnalyse = '/home/kh/data/controls_SAM/zzz_ms';
-% if 1 == strcmp (SubjectPath, SubjectToAnalyse)
-% return
-% end
+
+if 0 == strcmp (SubjectName, 'Pat_02_13008rh')
+    return
+end
 
     Path = strcat(SubjectPath, filesep, 'keptTrials');
     cd (Path)
@@ -96,10 +97,10 @@ end
 
 function UtestLR (SubjectPath, SubjectName, VlrAll, Vall, TimeInt)
  
-% SubjectToAnalyse = '/home/kh/data/controls_SAM/zzz_ms';
-% if 0 == strcmp (SubjectPath, SubjectToAnalyse)
-% return
-% end
+
+if 0 == strcmp (SubjectName, 'Pat_02_13008rh')
+    return
+end
 
     U=zeros(size(Vall,1),size(Vall,2),size(Vall,3));
     

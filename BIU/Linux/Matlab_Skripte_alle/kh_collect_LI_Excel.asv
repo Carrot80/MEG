@@ -1,0 +1,16 @@
+
+Files = 'D:\Arbeit\LinuxExchange\data\patients\patients_SAM';
+Dir = dir(Files);
+isub = [Dir(:).isdir];
+nameFolds = {Dir(isub).name}';
+nameFolds(ismember(nameFolds,{'.','..'})) = [];
+
+
+for i= 1:length(nameFolds)
+LI_patients.Broca(i,1) = LI_All.(nameFolds{i}).Broca.Classic;
+end
+
+
+for i= 1:length(nameFolds)
+LI_patients.Broca(i,2) = LI_All.(nameFolds{i}).Broca.Classic;
+end

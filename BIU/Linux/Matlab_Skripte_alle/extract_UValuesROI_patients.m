@@ -4,7 +4,7 @@ function for_all ()
 % function created textfiles for Maxvalue in ROI
 
 
-    ControlsFolder = '/home/kh/ShareWindows/data/controls/controls_SAM';
+    ControlsFolder = '/home/kh/ShareWindows/data/patients/patients_SAM';
 
     DIR = dir (ControlsFolder)
     isub = [DIR(:).isdir]; %  returns logical vector
@@ -25,24 +25,25 @@ end
 
 function kh_extractActROI (SubjectPath, SubjectName,  ROI_left, ROI_right, ROIName, TimeInt)
 
-% SubjectToAnalyse = '/home/kh/data/controls_SAM/zzz_ms';
-% if 1 == strcmp (SubjectPath, SubjectToAnalyse)
+% if 0 == strcmp (SubjectName, 'Pat_03_13014bg')
 %     return
 % end
 
-PathUTest = strcat (SubjectPath, filesep, 'UTest', filesep);
+PathUTest = strcat (SubjectPath, filesep, 'keptTrials', filesep);
 cd (PathUTest)
 
-Path2UValues = strcat (SubjectPath, filesep, 'UTest', filesep, 'Utest_LR_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)), 'sMNI+tlrc' );
+Path2UValues = strcat (SubjectPath, filesep, 'keptTrials', filesep, 'Utest_LR_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)), 'sMNI+tlrc' );
 
 [V_UValues, Info_UValues] = BrikLoad (Path2UValues);
 
 
-PathMask_left = strcat (SubjectPath, filesep, 'UTest', filesep, ROI_left, '+tlrc');
+% PathMask_left = strcat (SubjectPath, filesep, 'UTest', filesep, ROI_left, '+tlrc');
+PathMask_left = strcat('/home/kh/ShareWindows/data/patients/', ROI_left, '+tlrc');
 [Mask_left, Info_MASK_left] = BrikLoad (PathMask_left);
 
 
-PathMask_right = strcat (SubjectPath, filesep, 'UTest', filesep, ROI_right, '+tlrc');
+% PathMask_right = strcat (SubjectPath, filesep, 'UTest', filesep, ROI_right, '+tlrc');
+PathMask_right = strcat('/home/kh/ShareWindows/data/patients/', ROI_right, '+tlrc');
 [Mask_right, Info_MASK_right] = BrikLoad (PathMask_right);
 
 
@@ -79,7 +80,7 @@ rightAct=V_UValues(Right_Voxels);
  
 
     
- PathFile = strcat (SubjectPath, filesep, 'UTest', filesep, 'LI_', ROIName, 'dil_SumOfSignVoxels_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)),  '_s.mat' );
+ PathFile = strcat (SubjectPath, filesep, 'keptTrials', filesep, 'LI_', ROIName, 'dil_SumOfSignVoxels_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)),  '_s.mat' );
  save (PathFile, 'LI')
 
 end

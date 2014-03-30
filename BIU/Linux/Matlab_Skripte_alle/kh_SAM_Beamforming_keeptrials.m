@@ -8,8 +8,8 @@ isub = [DIR(:).isdir]; %# returns logical vector
 nameFolds = {DIR(isub).name}';
 nameFolds(ismember(nameFolds,{'.','..'})) = [];
 
-for i= 19
-% for i= 20:size(nameFolds,1)
+
+for i= 1:size(nameFolds,1)
     
    kh_SAM( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i})
 
@@ -22,6 +22,12 @@ end
 
 
 function kh_SAM(SubjectPath, SubjectName)
+
+
+if 0 == strcmp (SubjectName, 'Pat_03_13014bg')
+    return
+end
+
 
 % if exist(Path_vs, 'file')
 %     return

@@ -61,10 +61,11 @@ kh_MRI2Afni.m
 SAM_patients.m
 kh_SAM_Beamforming_keeptrials.m
 patients_avg.m
-Timeintervall_patients.m
-LR_UTest_ind_UValues.m % funktioniert an dieser Stelle nicht, benötigt anderes Infofile
-UTest_normalize.m % NOrmalisierung in MNI space
-extract_UValuesROI.m % Berechnung des LI-Wertes für ROIs
+Timeintervall_patients.m % wird nur für Infofile benötigt, um später Brik zu speichern
+LR_UTest_ind_UValues.m % funktioniert nur mit Infofile aus Timeintervall_patients.m
+SAM_normalize.m % normalisiert ortho
+UTest_normalize.m % NOrmalisierung in MNI space der UTest-Ergebnisse
+extract_UValuesROI_patients.m % Berechnung des LI-Wertes für ROIs
 kh_collect_LI % sammeln der Werte für alle Subjects in einer Matrix
 
 
