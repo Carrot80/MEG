@@ -2,7 +2,7 @@
 function forAll()
 
 
-ControlsFolder = '/home/kh/data/controls_SAM';
+ControlsFolder = '/home/kh/ShareWindows/data/controls/controls_SAM';
 
 DIR = dir (ControlsFolder)
 isub = [DIR(:).isdir]; %  returns logical vector
@@ -15,7 +15,7 @@ AVG = [];
 
 for i= 1:size(nameFolds)
     
-   [Info, AVG, TimeBeg, TimeEnd] = kh_get_avg( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .25, .65, AVG, i)
+   [Info, AVG, TimeBeg, TimeEnd] = kh_get_avg( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .32, .47, AVG, i)
    
    
 end
@@ -67,7 +67,7 @@ AVG_all = (AVG{1}+AVG{2}+AVG{3}+AVG{4}+AVG{5}+AVG{6}+AVG{7}+AVG{8}+AVG{9}+AVG{10
     OptTSOut.View = '+tlrc'
     %Vsymm=double(Vlr+V>0);
     
-    cd /home/kh/data/AVGcontrols
+    cd /home/kh/ShareWindows/data/controls/AVGcontrols
     WriteBrik (AVG_all, Info, OptTSOut);
    
 

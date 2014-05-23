@@ -1,11 +1,11 @@
 
 function for_all_subjects  
 
-%     PatientFolder = 'D:\kirsten_thesis\data\patients\';
-    ControlsFolder = 'D:\kirsten_thesis\data\controls\';
+    PatientFolder = 'D:\kirsten_thesis\data\patients\';
+%     ControlsFolder = 'D:\kirsten_thesis\data\controls\';
     
-     SelectSubjects (ControlsFolder)
-%      SelectSubjects (PatientFolder)
+%      SelectSubjects (ControlsFolder)
+     SelectSubjects (PatientFolder)
 end
 
 

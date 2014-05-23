@@ -67,8 +67,6 @@ function    GrandAverage (SubjectName, Path, AVG)
  cfg = [];
     cfg.interactive = 'yes';
     cfg.layout = '4D248.lay';
-    cfg.colorbar = 'yes';
-    cfg.xlim =.17;
     ft_topoplotER(cfg, grandavgBL_controls);
    
  %  not Baseline corrected   

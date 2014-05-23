@@ -1,6 +1,7 @@
 % Sensor Level analysis:
 % Compute Diff between abs left and right values
 ga=grandavgBL_Planar_controls_keepInd;
+ga=grandavgBL_controls_keepInd;
 [~,Li]=ismember(LRpairs(:,1),ga.label); % ga ) grandaverage with individually kept trials, LRpairs is file from Yuval
 [~,Ri]=ismember(LRpairs(:,2),ga.label);
 gaLR=ga;

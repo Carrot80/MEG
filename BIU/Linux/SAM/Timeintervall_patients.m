@@ -1,19 +1,17 @@
 function forAll()
 
 % dies für alle Patienten nutzen und umbauen
-ControlsFolder = '/home/kh/data/controls_SAM';
+ControlsFolder = '/home/kh/ShareWindows/data/patients/patients_SAM';
 
 DIR = dir (ControlsFolder)
 isub = [DIR(:).isdir]; %  returns logical vector
 nameFolds = {DIR(isub).name}';
 nameFolds(ismember(nameFolds,{'.','..'})) = [];
 
-for i= 1:size(nameFolds)
+for i= 7:size(nameFolds)
     
-   kh_SAM_TimeInt( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .3, .6)
-   kh_SAM_TimeInt( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .25, .55) 
-   kh_SAM_TimeInt( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .25, .65) 
-  
+   kh_SAM_TimeInt( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .32, .6)
+   
    
 end
 
@@ -22,10 +20,19 @@ end
 
 function kh_SAM_TimeInt (SubjectPath, SubjectName, TimeBeg, TimeEnd)
 
-Path2SAM = strcat (SubjectPath, filesep, 'SAM');
-cd(Path2SAM);
-Path2VS = strcat (SubjectPath, filesep, 'SAM', filesep, 'Workspace_SAM.mat');
-load (Path2VS) ;
+SAMPath = strcat(SubjectPath, filesep, 'SAM');
+cd (SAMPath)
+
+% to multiply weights with avgBL, read weights :
+[SAMHeader, ActIndex, ActWgts]=readWeights('M400,1-50Hz,VGa.wts');
+
+% load avg:
+PathAVG = strcat(SubjectPath, filesep, 'avgBL');
+load(PathAVG)
+
+vs=ActWgts*avgBL.avg;
+ns=mean(abs(ActWgts),2); % am 23.5.14 hinzugefügt, nachdem Ergebnisse Bias to the Center aufwiesen
+vs=vs./repmat(ns,1,size(vs,2)); % am 23.5.14 hinzugefügt, nachdem Ergebnisse Bias to the Center aufwiesen
 
 fs = 1017.25;
 size_vs=size(vs);
@@ -36,6 +43,10 @@ size_vs_1_1000ms=size(vs_1_1000ms);
 time_samples=1:size_vs_1_1000ms(2);
 time_sec=time_samples./fs;
 % I could have used function nearest, too.
+
+PathNewDir = strcat(SubjectPath, filesep, 'TimeIntervalls')
+% mkdir(PathNewDir)
+cd(PathNewDir)
 
 figure
 plot(time_sec,max(abs(vs_1_1000ms)));
@@ -56,7 +67,7 @@ sum_vs_IntOfIn = abs(sum(vs_IntOfIn'));
 cfg=[];
 cfg.step=5;
 cfg.boxSize=[-120 120 -90 90 -20 150];
-str_timeInt= strcat('ERF', '_', num2str(TimeBeg), '-', num2str(TimeEnd), 's_', SubjectName);
+str_timeInt= strcat('ERF_noise', '_', num2str(TimeBeg), '-', num2str(TimeEnd), 's_', SubjectName);
 cfg.prefix = str_timeInt; % change prefix
 % cfg.torig=-500;   %  comment if you want to sum up activity of specific time intervall
 % cfg.TR=1/1.01725; % comment if you want to sum up activity of specific time intervall
@@ -65,8 +76,8 @@ cfg.prefix = str_timeInt; % change prefix
 VS2Brik(cfg,1e+13*(sum_vs_IntOfIn')); % =>creates ERF+orig.Brik+Head 
 
 NewFileName = strcat(str_timeInt,'+orig');
-%  disp(['!@auto_tlrc -apar orthoMNI_avg152T+tlrc -input ', NewFileName,' -dxyz 5']) % 
-eval(['!@auto_tlrc -apar orthoMNI_avg152T+tlrc -input ', NewFileName,' -dxyz 5']) % 
+disp(['!@auto_tlrc -apar ', strcat(SubjectPath, filesep, 'keptTrials', filesep, 'orthoMNI_avg152T+tlrc'), ' -input ', NewFileName,' -dxyz 5']) % 
+eval(['!@auto_tlrc -apar ', strcat(SubjectPath, filesep, 'keptTrials', filesep, 'orthoMNI_avg152T+tlrc'), ' -input ', NewFileName,' -dxyz 5']) % 
 
 kh_reduceERF2Brain (SubjectPath, SubjectName, TimeBeg, TimeEnd)
 kh_z_transform (SubjectPath, SubjectName, TimeBeg, TimeEnd)
@@ -80,13 +91,13 @@ function kh_reduceERF2Brain (SubjectPath, SubjectName, TimeBeg, TimeEnd)
 %     return
 % end
 
-SAMPath = strcat(SubjectPath, filesep, 'SAM');
+SAMPath = strcat(SubjectPath, filesep, 'TimeIntervalls');
 cd (SAMPath)
 
-FileNameOld = strcat('ERF_', num2str(TimeBeg), '-', num2str(TimeEnd), 's', '_', SubjectName, '+tlrc');
+FileNameOld = strcat('ERF_noise_', num2str(TimeBeg), '-', num2str(TimeEnd), 's', '_', SubjectName, '+tlrc');
 
-disp(['!3dcalc -a /home/kh/data/mniBrain01+tlrc -b ', FileNameOld, ' -prefix ', strcat('brain01', FileNameOld), ' -exp ', 'b*a'])
-eval(['!3dcalc -a /home/kh/data/mniBrain01+tlrc -b ', FileNameOld, ' -prefix ', strcat('brain01', FileNameOld), ' -exp ', 'b*a'])
+disp(['!3dcalc -a /home/kh/ShareWindows/data/mniBrain01+tlrc -b ', FileNameOld, ' -prefix ', strcat('brain01', FileNameOld), ' -exp ', 'b*a'])
+eval(['!3dcalc -a /home/kh/ShareWindows/data/mniBrain01+tlrc -b ', FileNameOld, ' -prefix ', strcat('brain01', FileNameOld), ' -exp ', 'b*a'])
 
 
 end
@@ -98,15 +109,16 @@ function kh_z_transform (SubjectPath, SubjectName, TimeBeg, TimeEnd)
     % (X-MEAN(X)) ./ STD(X)
     %  Vzscore = (V-mean(V)./std(V);
 
-    Path = strcat(SubjectPath, filesep, 'SAM');
+    Path = strcat(SubjectPath, filesep, 'TimeIntervalls');
     cd (Path)
     
-    FileName = strcat('brain01ERF_', num2str(TimeBeg), '-', num2str(TimeEnd), 's', '_', SubjectName, '+tlrc');   
+    FileName = strcat('brain01ERF_noise_', num2str(TimeBeg), '-', num2str(TimeEnd), 's', '_', SubjectName, '+tlrc');   
 
     [V, Info] = BrikLoad (FileName);
 
 
     Vz=(V-mean(V(:)))/std(V(:));
+    
 
 
     OptTSOut.Scale = 1;
@@ -130,7 +142,10 @@ function kh_z_transform (SubjectPath, SubjectName, TimeBeg, TimeEnd)
 
 FileNameNew = OptTSOut.Prefix;   
    
-eval(['!3dcalc -a /home/kh/data/mniBrain01+tlrc -b ', FileNameNew,  ' -prefix ', strcat('br_', FileNameNew),' -exp ' , 'b*a'])
+eval(['!3dcalc -a /home/kh/ShareWindows/data/mniBrain01+tlrc -b ', FileNameNew,  ' -prefix ', strcat('br_', FileNameNew),' -exp ' , 'b*a'])
+
+PathERF = strcat('br_z_transf_brain01ERF_noise_', num2str(TimeBeg), '-', num2str(TimeEnd), 's_', SubjectName, '+tlrc');
+eval (['!3dcopy ', PathERF, ' ',strcat('br_z_transf_brain01ERF_noise', num2str(TimeBeg), '-', num2str(TimeEnd), 's_', SubjectName, 'MNI.nii')])
     
     
 end

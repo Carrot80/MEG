@@ -12,10 +12,13 @@
 
 
 %
-!3dExtrema -volume -sep_dist 30 -mask_file /home/kh/abin/test+tlrc ERF_0.32-0.6s_zzz_wi+tlrc
+!3dExtrema -volume -sep_dist 30 -mask_file /home/kh/abin/test+tlrc ERF_0.14-0.23s_zzz_wi+tlrc
+%/home/kh/abin/test+tlrc = mask file => call it differently (see
+%left_Wernicke zzz.wi)
 
 % creates mask:
 !3dresample -master ERF_0.32-0.6s_zzz_wi+tlrc -prefix Broca -inset /home/kh/abin/test+tlrc  
+% !3dresample -master ERF_0.32-0.6s_zzz_wi+tlrc -prefix Wernicke -inset /home/kh/data/controls_SAM/zzz_wi/SAM/left_wernicke  
 
 % closure: also takes extrema at the border of mask:
 !3dExtrema -volume -sep_dist 30 -closure -mask_file Broca+tlrc ERF_0.32-0.6s_zzz_wi+tlrc

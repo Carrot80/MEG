@@ -2,7 +2,7 @@
 function forAll()
 
 % dies für alle Patienten nutzen und umbauen
-ControlsFolder = '/home/kh/data/controls_SAM';
+ControlsFolder = '/home/kh/ShareWindows/data/controls/controls_SAM';
 
 DIR = dir (ControlsFolder)
 isub = [DIR(:).isdir]; %  returns logical vector
@@ -11,10 +11,10 @@ nameFolds(ismember(nameFolds,{'.','..'})) = [];
 
 for i= 1:size(nameFolds)
     
-   kh_ERF_transform_MNI( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .32, .6)
-   kh_ERF_transform_MNI( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .2, .31) 
-   kh_ERF_transform_MNI( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .2, .6) 
-   
+   kh_ERF_transform_MNI( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .32, .47)
+%    kh_ERF_transform_MNI( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .2, .31) 
+%    kh_ERF_transform_MNI( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .2, .6) 
+%    
    
 end
 
@@ -24,9 +24,9 @@ end
 
 function kh_ERF_transform_MNI (SubjectPath, SubjectName, TimeBeg, TimeEnd)
 
-if 1 == strcmp (SubjectPath, '/home/kh/data/controls_SAM/zzz_ca') || 1 == strcmp (SubjectPath, '/home/kh/data/controls_SAM/zzz_ht')
-    return
-end
+% if 1 == strcmp (SubjectPath, '/home/kh/data/controls_SAM/zzz_ca') || 1 == strcmp (SubjectPath, '/home/kh/data/controls_SAM/zzz_ht')
+%     return
+% end
 
 SAMPath = strcat(SubjectPath, filesep, 'SAM');
 cd (SAMPath)

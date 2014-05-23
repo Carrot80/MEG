@@ -22,7 +22,6 @@ cfg.xlim=[xlim xlim];
 cfg.highlight          = 'marker';
 cfg.highlightchannel   =  gaData.label(p<pThr);
 cfg.interactive='yes';
-cfg.colorbar='yes';
 if ~mirror
     if isfield(gaData,'individual')
         avg=mean(gaData.individual(:,:,xSamp));
