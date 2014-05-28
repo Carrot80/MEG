@@ -72,9 +72,6 @@ UTest_normalize.m % NOrmalisierung in MNI space der UTest-Ergebnisse
 extract_UValuesROI_patients.m % Berechnung des LI-Wertes für ROIs
 kh_collect_LI % sammeln der Werte für alle Subjects in einer Matrix
 
-Extract_Max_Activity_no_noise_voxelcomparison.m 
-
-
 % außerdem für Diss:
 extract_Act_patients2.m % erstellt Abbildungen aus maximaler Activität pro Sample für linke und rechte ROI
 Extract_Max_Activity.m % extrahiert Maxima in ROI und berechnet LIs für Summe aus Maxima pro sample und aus höchsten Maximum aller samples
@@ -86,7 +83,3 @@ Extract_Max_Activity.m % extrahiert Maxima in ROI und berechnet LIs für Summe a
 patients_avg.m
 Timeintervall_patients.m % mit z-transformation und normalisierung
 
-
-
-LI_zsores.m
-FindExtrema.m

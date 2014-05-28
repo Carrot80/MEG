@@ -1,13 +1,13 @@
 function forAll()
 
 % dies für alle Patienten nutzen und umbauen
-ControlsFolder = '/home/kh/ShareWindows/data/controls/controls_SAM';
+ControlsFolder = '/home/kh/ShareWindows/data/patients/patients_SAM';
 
 DIR = dir (ControlsFolder)
 isub = [DIR(:).isdir]; %  returns logical vector
 nameFolds = {DIR(isub).name}';
 nameFolds(ismember(nameFolds,{'.','..'})) = [];
-TimeInt = [.32, .47];
+TimeInt = [.32, .60];
 
 for i= 1:size(nameFolds)
     
@@ -42,8 +42,11 @@ end
 
 PathUtest = strcat('Utest_LR_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)), 's', '+orig');
 
-disp(['!@auto_tlrc -apar ', '/home/kh/data/controls_SAM/', SubjectName, '/UTest/orthoMNI_avg152T+tlrc',' -suffix MNI -input ', PathUtest, ' -ok_notice']);
+disp(['!@auto_tlrc -apar ', '/home/kh/data/patients_SAM/', SubjectName, '/UTest/orthoMNI_avg152T+tlrc',' -suffix MNI -input ', PathUtest, ' -ok_notice']);
 % eval(['!@auto_tlrc -apar ', 'orthoMNI_avg152T+tlrc',' -suffix MNI -input ', PathUtest, ' -dxyz 5']);
+eval(['!@auto_tlrc -apar ', 'orthoMNI_avg152T+tlrc',' -suffix MNI -input ', PathUtest, ' -dxyz 5']);
+
+
 eval(['!@auto_tlrc -apar ', SubjectPath, '/UTest/orthoMNI_avg152T+tlrc',' -suffix MNI -input ', PathUtest, ' -dxyz 5']);
 % eval(['!@auto_tlrc -apar ', 'orthoMNI_avg152T+tlrc',' -suffix MNI -input ', PathUtest, ' -dxyz 5']);
 

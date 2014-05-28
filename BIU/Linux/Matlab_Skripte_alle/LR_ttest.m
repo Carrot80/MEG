@@ -3,7 +3,7 @@ function for_all ()
 
 % Script written by Yuval:
 
-ControlsFolder = '/home/kh/data/controls_SAM';
+ControlsFolder = '/home/kh/ShareWindows/data/controls/controls_SAM';
 
 DIR = dir (ControlsFolder)
 isub = [DIR(:).isdir]; %  returns logical vector
@@ -11,9 +11,9 @@ nameFolds = {DIR(isub).name}';
 nameFolds(ismember(nameFolds,{'.','..'})) = [];
 
 
-TimeIntervall (nameFolds, ControlsFolder, 0.3, 0.6 )
-TimeIntervall (nameFolds, ControlsFolder, 0.25, 0.55 )
-TimeIntervall (nameFolds, ControlsFolder, 0.25, 0.65 )
+TimeIntervall (nameFolds, ControlsFolder, 0.32, 0.47 )
+% TimeIntervall (nameFolds, ControlsFolder, 0.25, 0.55 )
+% TimeIntervall (nameFolds, ControlsFolder, 0.25, 0.65 )
 
 
 end
@@ -89,7 +89,7 @@ function UtestLR (SubjectPath, SubjectName, Info, VlrAll, Vall, TimeBeg, TimeEnd
         i
     end
 
-    PathAllControls = '/home/kh/data/AVGcontrols';
+    PathAllControls = '/home/kh/ShareWindows/data/controls/AVGcontrols';
     
     cd (PathAllControls)
     

@@ -1,7 +1,7 @@
 function forAll()
 
 % dies für alle Patienten nutzen und umbauen
-ControlsFolder = '/home/kh/data/controls_SAM';
+ControlsFolder = '/home/kh/ShareWindows/data/controls/controls_SAM';
 
 DIR = dir (ControlsFolder)
 isub = [DIR(:).isdir]; %  returns logical vector
@@ -10,10 +10,10 @@ nameFolds(ismember(nameFolds,{'.','..'})) = [];
 
 for i= 1:size(nameFolds)
     
-   kh_SAM_TimeInt( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .320, .600)
-   kh_SAM_TimeInt( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .200, .310) 
-   kh_SAM_TimeInt( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .200, .600) 
-   
+   kh_SAM_TimeInt( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .320, .470)
+%    kh_SAM_TimeInt( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .200, .310) 
+%    kh_SAM_TimeInt( strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, .200, .600) 
+%    
    
 end
 
@@ -42,7 +42,7 @@ plot(time_sec,max(abs(vs_1_1000ms)));
 axis tight;
 Title=strcat(num2str(IntBeg), '_', num2str(IntEnd), 's_', SubjectName);
 title(Title)
-print (Title, 'fig'); 
+% print (Title, 'fig'); 
 close all
 
 sample_int_Beg=size(find(time_sec<=IntBeg));
