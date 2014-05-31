@@ -15,18 +15,15 @@ function for_all ()
     for i= 1:size(nameFolds)
    
 
-    TimeInt = [.32, .6];
+    TimeInt = [.25, .65];
         
        [LI_ALL_voxelvalues]= kh_extractActROI(strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, 'Broca_left_dil', 'Broca_right_dil', 'Broca', TimeInt, i, LI_ALL_voxelvalues, 1:4, 9:12, 17:20)
        [LI_ALL_voxelvalues]= kh_extractActROI(strcat(ControlsFolder, filesep, nameFolds{i,1}), nameFolds{i}, 'Wernicke_left_dil', 'Wernicke_right_dil', 'Wernicke', TimeInt, i , LI_ALL_voxelvalues, 5:8, 13:16, 21:24)
-%         findextrema(strcat(ControlsFolder, filesep, nameFolds{i,1}), 'Broca_left_dil', nameFolds{i})  
-%       
-
 
     end
 
     
-    Path_LI_All_noise=strcat('/home/kh/ShareWindows/data/', filesep, 'controls', 'LI_All_voxelvalues_noise')
+    Path_LI_All_noise=strcat('/home/kh/ShareWindows/data/', filesep, 'LI_controls_', num2str(TimeInt(1)), '-', num2str(TimeInt(2)), 's_voxelvalues_noise.mat')
     save (Path_LI_All_noise, 'LI_ALL_voxelvalues')
 
 end
@@ -56,16 +53,19 @@ PathMask_right = strcat ('/home/kh/ShareWindows/data/patients/', ROI_right, '+tl
     RightAct = Mask_right.*V_ERF;
 %% p>.01
     
-[ind_LeftAct]=find(LeftAct>2.33)
-zscores_LeftAct=LeftAct(ind_LeftAct)
+[ind_LeftAct]=find(LeftAct>2.326348)
+zscores_LeftAct_p01=LeftAct(ind_LeftAct)
 
-[ind_RightAct]=find(RightAct>2.33)
-zscores_RightAct=RightAct(ind_RightAct)
+[ind_RightAct]=find(RightAct>2.326348)
+zscores_RightAct_p01=RightAct(ind_RightAct)
 
-LI.LI_Voxelvalue_p01=(sum(zscores_LeftAct)-sum(zscores_RightAct))./(sum(zscores_LeftAct)+sum(zscores_RightAct))
-LI.LI_Voxelcount_p01=(length(zscores_LeftAct)-length(zscores_RightAct))./(length(zscores_LeftAct)+length(zscores_RightAct))
-LI.Voxelcount_p01_LeftVox=length(zscores_LeftAct);
-LI.Voxelcount_p01_RightVox=length(zscores_RightAct);
+LI.LI_Voxelvalue_p01=[(sum(zscores_LeftAct_p01)./length(zscores_LeftAct_p01)-sum(zscores_RightAct_p01)./length(zscores_RightAct_p01))]./[(sum(zscores_LeftAct_p01)./length(zscores_LeftAct_p01)+sum(zscores_RightAct_p01)./length(zscores_RightAct_p01))]
+
+
+
+LI.LI_Voxelcount_p01=(length(zscores_LeftAct_p01)-length(zscores_RightAct_p01))./(length(zscores_LeftAct_p01)+length(zscores_RightAct_p01))
+LI.Voxelcount_p01_LeftVox=length(zscores_LeftAct_p01);
+LI.Voxelcount_p01_RightVox=length(zscores_RightAct_p01);
 
 
 
@@ -77,7 +77,7 @@ zscores_LeftAct_p001=LeftAct(ind_LeftAct_p001)
 [ind_RightAct_p001]=find(RightAct>3.090232)
 zscores_RightAct_p001=RightAct(ind_RightAct_p001)
 
-LI.LI_Voxelvalue_p001=(sum(zscores_LeftAct_p001)-sum(zscores_RightAct_p001))./(sum(zscores_LeftAct_p001)+sum(zscores_RightAct_p001))
+LI.LI_Voxelvalue_p001=[(sum(zscores_LeftAct_p001)./length(zscores_LeftAct_p001)-sum(zscores_RightAct_p001)./length(zscores_RightAct_p001))]./[(sum(zscores_LeftAct_p001)./length(zscores_LeftAct_p001)+sum(zscores_RightAct_p001)./length(zscores_RightAct_p001))]
 LI.LI_Voxelcount_p001=(length(zscores_LeftAct_p001)-length(zscores_RightAct_p001))./(length(zscores_LeftAct_p001)+length(zscores_RightAct_p001))
 LI.Voxelcount_p001_LeftVox=length(zscores_LeftAct_p001);
 LI.Voxelcount_p001_RightVox=length(zscores_RightAct_p001);
@@ -96,7 +96,7 @@ zscores_LeftAct_p05=LeftAct(ind_LeftAct_p05)
 [ind_RightAct_p05]=find(RightAct>1.644853)
 zscores_RightAct_p05=RightAct(ind_RightAct_p05)
 
-LI.LI_Voxelvalue_p05=(sum(zscores_LeftAct_p05)-sum(zscores_RightAct_p05))./(sum(zscores_LeftAct_p05)+sum(zscores_RightAct_p05))
+LI.LI_Voxelvalue_p05=[(sum(zscores_LeftAct_p05)./length(zscores_LeftAct_p05)-sum(zscores_RightAct_p05)./length(zscores_RightAct_p05))]./[(sum(zscores_LeftAct_p05)./length(zscores_LeftAct_p05)+sum(zscores_RightAct_p05)./length(zscores_RightAct_p05))]
 LI.LI_Voxelcount_p05=(length(zscores_LeftAct_p05)-length(zscores_RightAct_p05))./(length(zscores_LeftAct_p05)+length(zscores_RightAct_p05))
 LI.Voxelcount_p05_LeftVox=length(zscores_LeftAct_p05);
 LI.Voxelcount_p05_RightVox=length(zscores_RightAct_p05);

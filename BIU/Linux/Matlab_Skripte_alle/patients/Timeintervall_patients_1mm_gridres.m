@@ -30,6 +30,8 @@ cd (SAMPath)
 PathAVG = strcat(SubjectPath, filesep, 'avgBL');
 load(PathAVG)
 
+
+
 vs=ActWgts*avgBL.avg;
 ns=mean(abs(ActWgts),2); % am 23.5.14 hinzugefügt, nachdem Ergebnisse Bias to the Center aufwiesen
 vs=vs./repmat(ns,1,size(vs,2)); % am 23.5.14 hinzugefügt, nachdem Ergebnisse Bias to the Center aufwiesen
@@ -44,9 +46,7 @@ time_samples=1:size_vs_1_1000ms(2);
 time_sec=time_samples./fs;
 % I could have used function nearest, too.
 
-PathNewDir = strcat(SubjectPath, filesep, 'TimeIntervalls')
-% mkdir(PathNewDir)
-cd(PathNewDir)
+cd (strcat(SubjectPath, filesep, 'grid_1mm'))
 
 figure
 plot(time_sec,max(abs(vs_1_1000ms)));
@@ -67,7 +67,7 @@ sum_vs_IntOfIn = abs(sum(vs_IntOfIn'));
 cfg=[];
 cfg.step=5;
 cfg.boxSize=[-120 120 -90 90 -20 150];
-str_timeInt= strcat('ERF_noise', '_', num2str(TimeBeg), '-', num2str(TimeEnd), 's_', SubjectName);
+str_timeInt= strcat('ERF_noise_', num2str(TimeBeg), '-', num2str(TimeEnd), 's_', SubjectName);
 cfg.prefix = str_timeInt; % change prefix
 % cfg.torig=-500;   %  comment if you want to sum up activity of specific time intervall
 % cfg.TR=1/1.01725; % comment if you want to sum up activity of specific time intervall
@@ -76,8 +76,8 @@ cfg.prefix = str_timeInt; % change prefix
 VS2Brik(cfg,1e+13*(sum_vs_IntOfIn')); % =>creates ERF+orig.Brik+Head 
 
 NewFileName = strcat(str_timeInt,'+orig');
-disp(['!@auto_tlrc -apar ', strcat(SubjectPath, filesep, 'keptTrials', filesep, 'orthoMNI_avg152T+tlrc'), ' -input ', NewFileName,' -dxyz 5']) % 
-eval(['!@auto_tlrc -apar ', strcat(SubjectPath, filesep, 'keptTrials', filesep, 'orthoMNI_avg152T+tlrc'), ' -input ', NewFileName,' -dxyz 5']) % 
+disp(['!@auto_tlrc -apar ', strcat(SubjectPath, filesep, 'keptTrials', filesep, 'orthoMNI_avg152T+tlrc'), ' -input ', NewFileName,' -dxyz 1']) % 
+eval(['!@auto_tlrc -apar ', strcat(SubjectPath, filesep, 'keptTrials', filesep, 'orthoMNI_avg152T+tlrc'), ' -input ', NewFileName,' -dxyz 1']) % 
 
 kh_reduceERF2Brain (SubjectPath, SubjectName, TimeBeg, TimeEnd)
 kh_z_transform (SubjectPath, SubjectName, TimeBeg, TimeEnd)
@@ -91,13 +91,12 @@ function kh_reduceERF2Brain (SubjectPath, SubjectName, TimeBeg, TimeEnd)
 %     return
 % end
 
-SAMPath = strcat(SubjectPath, filesep, 'TimeIntervalls');
-cd (SAMPath)
+cd (strcat(SubjectPath, filesep, 'grid_1mm'))
 
 FileNameOld = strcat('ERF_noise_', num2str(TimeBeg), '-', num2str(TimeEnd), 's', '_', SubjectName, '+tlrc');
 
-disp(['!3dcalc -a /home/kh/ShareWindows/data/mniBrain01+tlrc -b ', FileNameOld, ' -prefix ', strcat('brain01', FileNameOld), ' -exp ', 'b*a'])
-eval(['!3dcalc -a /home/kh/ShareWindows/data/mniBrain01+tlrc -b ', FileNameOld, ' -prefix ', strcat('brain01', FileNameOld), ' -exp ', 'b*a'])
+disp(['!3dcalc -a /home/kh/ShareWindows/data/mniBrain_1mm_01+tlrc -b ', FileNameOld, ' -prefix ', strcat('brain01', FileNameOld), ' -exp ', 'b*a'])
+eval(['!3dcalc -a /home/kh/ShareWindows/data/mniBrain_1mm_01+tlrc -b ', FileNameOld, ' -prefix ', strcat('brain01', FileNameOld), ' -exp ', 'b*a'])
 
 
 end
@@ -109,8 +108,7 @@ function kh_z_transform (SubjectPath, SubjectName, TimeBeg, TimeEnd)
     % (X-MEAN(X)) ./ STD(X)
     %  Vzscore = (V-mean(V)./std(V);
 
-    Path = strcat(SubjectPath, filesep, 'TimeIntervalls');
-    cd (Path)
+    cd (strcat(SubjectPath, filesep, 'grid_1mm'))
     
     FileName = strcat('brain01ERF_noise_', num2str(TimeBeg), '-', num2str(TimeEnd), 's', '_', SubjectName, '+tlrc');   
 
@@ -142,7 +140,7 @@ function kh_z_transform (SubjectPath, SubjectName, TimeBeg, TimeEnd)
 
 FileNameNew = OptTSOut.Prefix;   
    
-eval(['!3dcalc -a /home/kh/ShareWindows/data/mniBrain01+tlrc -b ', FileNameNew,  ' -prefix ', strcat('br_', FileNameNew),' -exp ' , 'b*a'])
+eval(['!3dcalc -a /home/kh/ShareWindows/data/mniBrain_1mm_01+tlrc -b ', FileNameNew,  ' -prefix ', strcat('br_', FileNameNew),' -exp ' , 'b*a'])
 
 PathERF = strcat('br_z_transf_brain01ERF_noise_', num2str(TimeBeg), '-', num2str(TimeEnd), 's_', SubjectName, '+tlrc');
 eval (['!3dcopy ', PathERF, ' ',strcat('br_z_transf_brain01ERF_noise', num2str(TimeBeg), '-', num2str(TimeEnd), 's_', SubjectName, 'MNI.nii')])
