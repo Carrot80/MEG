@@ -30,19 +30,19 @@ function kh_extractActROI (SubjectPath, SubjectName,  ROI_left, ROI_right, ROINa
 %     return
 % end
 
-PathUTest = strcat (SubjectPath, filesep, 'UTest', filesep);
+PathUTest = strcat (SubjectPath, filesep, 'keptTrials', filesep);
 cd (PathUTest)
 
-Path2UValues = strcat (SubjectPath, filesep, 'UTest', filesep, 'Utest_LR_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)), 'sMNI+tlrc' );
+Path2UValues = strcat (SubjectPath, filesep, 'keptTrials', filesep, 'Utest_LR_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)), 'sMNI+tlrc' );
 
 [V_UValues, Info_UValues] = BrikLoad (Path2UValues);
 
 
-PathMask_left = strcat (SubjectPath, filesep, 'UTest', filesep, ROI_left, '+tlrc');
+PathMask_left = strcat (SubjectPath, filesep, 'keptTrials', filesep, ROI_left, '+tlrc');
 [Mask_left, Info_MASK_left] = BrikLoad (PathMask_left);
 
 
-PathMask_right = strcat (SubjectPath, filesep, 'UTest', filesep, ROI_right, '+tlrc');
+PathMask_right = strcat (SubjectPath, filesep, 'keptTrials', filesep, ROI_right, '+tlrc');
 [Mask_right, Info_MASK_right] = BrikLoad (PathMask_right);
 
 
@@ -79,7 +79,7 @@ rightAct=V_UValues(Right_Voxels);
  
 
     
- PathFile = strcat (SubjectPath, filesep, 'UTest', filesep, 'LI_', ROIName, 'dil_SumOfSignVoxels_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)),  '_s.mat' );
+ PathFile = strcat (SubjectPath, filesep, 'keptTrials', filesep, 'LI_', ROIName, 'dil_SumOfSignVoxels_', num2str(TimeInt(1,1)), '_', num2str(TimeInt(1,2)),  '_s.mat' );
  save (PathFile, 'LI')
 
 end

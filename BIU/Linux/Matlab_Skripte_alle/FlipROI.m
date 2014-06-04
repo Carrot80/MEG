@@ -2,7 +2,7 @@
 
 !3dcopy AAL_left_AngSuprTempSup_dil_3vox3D.nii AAL_left_AngSuprTempSup_dil_3vox3D
  
-[V, Info] = BrikLoad ('AAL_left_AngSuprTempSup_dil_3vox3D+tlrc');
+[V, Info] = BrikLoad ('Wernicke_left_dil_fMRI+tlrc');
     Vlr=flipdim(V,1);
 %     Vdif=V-Vlr;
 %     Vdif(1:16,:,:)=0;
@@ -14,7 +14,7 @@
 %     InfoNewTSOut.BRICK_TYPES=3*ones(1,1); % 1 short, 3 float.
 %     InfoNewTSOut.DATASET_RANK(2)=1;
     OptTSOut.Scale = 1;
-    OptTSOut.Prefix = ['AAL_rightflipped_AngSuprTempSup_dil_3vox3D'];
+    OptTSOut.Prefix = ['Wernicke_right_dil_fMRI'];
     OptTSOut.verbose = 1;
     OptTSOut.View = '+tlrc'
     %Vsymm=double(Vlr+V>0);
@@ -22,4 +22,4 @@
     
     
 
-%     !3dcalc -a Broca_right+tlrc -exp 'ispositive(a)' -prefix Broca_right_recalc 
+%     !3dcalc -a Wernicke_right_dil_fMRI+tlrc -exp 'ispositive(a)' -prefix Wernicke_right_dil_fMRI_recalc 

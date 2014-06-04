@@ -4,7 +4,7 @@ function for_all ()
 % function created textfiles for Maxvalue in ROI, zum Ausrechnen des LI's
 
 
-    ControlsFolder = '/media/truecrypt7/kirsten_thesis/data/patients/';
+    ControlsFolder = '/media/truecrypt7/kirsten_thesis/data/controls/';
 
     DIR = dir (ControlsFolder)
     isub = [DIR(:).isdir]; %  returns logical vector
@@ -19,7 +19,7 @@ function for_all ()
     
     end
 
-    Path=strcat('/media/truecrypt7/kirsten_thesis/data/patients/','Extrema_and_Locations_controls_Verbgeneration_t-values.mat')
+    Path=strcat('/home/kh/ShareWindows/Extrema_and_Locations_fMRI_Verbgeneration_t-values_patients.mat')
     save(Path, 'Table')
     
 end
@@ -27,9 +27,7 @@ end
 
 function [Table]=findextrema(SubjectPath, SubjectName, Table, i, Task)
 
-PathMask_complete = strcat ('/home/kh/ShareWindows/Masks_fMRI/Brainmask+tlrc');
-PathMask_left = strcat ('/home/kh/ShareWindows/Masks_fMRI/Left_Brainmask+tlrc');
-PathMask_right = strcat ('/home/kh/ShareWindows/Masks_fMRI/Right_Brainmask+tlrc');
+
 
 Path=strcat(SubjectPath, filesep, 'fMRI/statistics/', Task);
 
@@ -38,19 +36,21 @@ cd(Path)
 !3dcopy wspmT_0001.hdr wspmT_0001
 
 % Maske auf T-Verteilung anpassen:
-%hier weitermachen
- eval(['!3dresample -master ', PathMask_complete, ' -prefix ', ' wspmT_0001_downsampled', ' -inset ', 'wspmT_0001+tlrc' ]) 
+    % PathMask_complete = strcat ('/home/kh/ShareWindows/Masks_fMRI/Brainmask+tlrc');
+    % PathMask_left = strcat ('/home/kh/ShareWindows/Masks_fMRI/Left_Brainmask+tlrc');
+    % PathMask_right = strcat ('/home/kh/ShareWindows/Masks_fMRI/Right_Brainmask+tlrc');
+    %  eval(['!3dresample -master wspmT_0001+tlrc', ' -prefix ', ' Brainmask_complete_fMRI', ' -inset ', PathMask_complete ]) 
+    %  eval(['!3dresample -master wspmT_0001+tlrc', ' -prefix ', ' Brainmask_left_fMRI', ' -inset ', PathMask_left ]) 
+    %  eval(['!3dresample -master wspmT_0001+tlrc', ' -prefix ', ' Brainmask_right_fMRI', ' -inset ', PathMask_right ]) 
 
  
- !3dcopy wspmT_0001_downsampled+tlrc wspmT_0001_downsampled.nii
+PathMask_complete_fMRI = strcat ('/home/kh/ShareWindows/Masks_fMRI/Brainmask_complete_fMRI+tlrc');
+PathMask_left_fMRI = strcat ('/home/kh/ShareWindows/Masks_fMRI/Brainmask_left_fMRI+tlrc');
+PathMask_right_fMRI = strcat ('/home/kh/ShareWindows/Masks_fMRI/Brainmask_right_fMRI+tlrc');
  
- 
-     
-
- 
-    eval(['!3dExtrema -volume -mask_file ', PathMask_complete, ' wspmT_0001+tlrc > Extrema_Mask_complete.txt'])
-        eval(['!3dExtrema -volume -mask_file ', PathMask_left, ' wspmT_0001+tlrc > Extrema_left_Brain.txt'])
-            eval(['!3dExtrema -volume -mask_file ', PathMask_right, ' wspmT+tlrc > Extrema_right_Brain.txt'])
+    eval(['!3dExtrema -volume -mask_file ', PathMask_complete_fMRI, ' wspmT_0001+tlrc > Extrema_Mask_complete.txt'])
+        eval(['!3dExtrema -volume -mask_file ', PathMask_left_fMRI, ' wspmT_0001+tlrc > Extrema_left_Brain.txt'])
+            eval(['!3dExtrema -volume -mask_file ', PathMask_right_fMRI, ' wspmT_0001+tlrc > Extrema_right_Brain.txt'])
 
 [Table, Mask]=kh_Whereami (SubjectPath, SubjectName, Table, i, 'Mask_complete', 1)
 [Table, Mask]=kh_Whereami (SubjectPath, SubjectName, Table, i, 'left_Brain', 2)

@@ -38,6 +38,8 @@ eval(['!3dresample -master ', Path2UValues, ' -prefix ', ROI_leftNEW, ' -inset '
 eval(['!3dresample -master ', Path2UValues, ' -prefix ', ROI_rightNEW, ' -inset ', ROI_rightOld ]) 
 
 
+eval(['!3dresample -master ', 'z_transf_brain01ERF_noise_0.32-0.6s_Pat_01_13021km+tlrc', ' -prefix ', 'Left_Brainmask_MEG_1mm', ' -inset ', 'Left_Brainmask_fMRI+tlrc' ]) 
+
 
 
 

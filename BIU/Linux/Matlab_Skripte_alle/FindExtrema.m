@@ -4,7 +4,7 @@ function for_all ()
 % function created textfiles for Maxvalue in ROI, zum Ausrechnen des LI's
 
 
-    ControlsFolder = '/home/kh/ShareWindows/data/patients/patients_SAM';
+    ControlsFolder = '/home/kh/ShareWindows/data/controls/controls_SAM';
 
     DIR = dir (ControlsFolder)
     isub = [DIR(:).isdir]; %  returns logical vector
@@ -21,8 +21,7 @@ function for_all ()
     
     end
 
-    Table.Location= Table.Location'
-    Path=strcat('/home/kh/ShareWindows/data', filesep, 'Extrema_and_Locations_patients.mat')
+    Path=strcat('/home/kh/ShareWindows/data', filesep, 'Extrema_and_Locations_controls.mat')
     save(Path, 'Table')
     
 end
@@ -35,27 +34,51 @@ if 1==strcmp(SubjectName,'Pat_02_13008rh_1') || 1==strcmp(SubjectName,'Pat_02_13
     return
 end
 
-Path=strcat(SubjectPath, filesep, 'TimeIntervalls');
+Path=strcat(SubjectPath, filesep, 'SAM');
 
 cd(Path)
 
-PathMask = strcat ('/home/kh/ShareWindows/data/Brainmask+tlrc');
-% eval(['!3dcalc -a ERF_noise_0.32-0.6s_Pat_01_13021km+tlrc -b ', PathMask_left, ' -exp a*b -prefix ',ROI, '_zscores'])
+PathMask_complete = strcat ('/home/kh/ShareWindows/data/Brainmask+tlrc');
+PathMask_left = strcat ('/home/kh/ShareWindows/data/Left_Brainmask+tlrc');
+PathMask_right = strcat ('/home/kh/ShareWindows/data/Right_Brainmask+tlrc');
+
+% eval(['!3dcalc -a ERF_noise_0.32-0.6s_Pat_01_13021km+tlrc -b ', PathMask_left, ' -exp a*b -prefix Left_Brainmask'])
+% eval(['!3dcalc -a ERF_noise_0.32-0.6s_Pat_01_13021km+tlrc -b ', PathMask_right, ' -exp a*b -prefix Right_Brainmask'])
+ eval(['!3dresample -master ', 'ERF_noise_0.32-0.6s_Pat_01_13021km+tlrc', ' -prefix ', 'Brainmask', ' -inset ', PathMask_complete ]) 
+% eval(['!3dresample -master ', 'ERF_noise_0.32-0.6s_Pat_01_13021km+tlrc', ' -prefix ', 'Left_Brainmask', ' -inset ', PathMask_left ]) 
 
 
 if 1==strcmp (SubjectName,'Pat_02_13008rh') ||  1==strcmp (SubjectName,'Pat_03_13014bg')
-    eval(['!3dExtrema -volume -mask_file ', PathMask, ' BothRuns_br_z_transf_brain01ERF_noise_0.32-0.6s+tlrc > Extrema.txt'])
+    eval(['!3dExtrema -volume -mask_file ', PathMask_complete, ' BothRuns_br_z_transf_brain01ERF_noise_0.32-0.6s+tlrc > Extrema_Mask_complete.txt'])
+    eval(['!3dExtrema -volume -mask_file ', PathMask_left, ' BothRuns_br_z_transf_brain01ERF_noise_0.32-0.6s+tlrc > Extrema_left_Brain.txt'])
+    eval(['!3dExtrema -volume -mask_file ', PathMask_right, ' BothRuns_br_z_transf_brain01ERF_noise_0.32-0.6s+tlrc > Extrema_right_Brain.txt'])
 else
     
-    eval(['!3dExtrema -volume -mask_file ', PathMask, ' br_z_transf_brain01ERF_noise_0.32-0.6s_', SubjectName,'+tlrc > Extrema.txt'])
+    eval(['!3dExtrema -volume -mask_file ', PathMask_complete, ' br_z_transf_brain01ERF_noise_0.32-0.6s_', SubjectName,'+tlrc > Extrema_Mask_complete.txt'])
+        eval(['!3dExtrema -volume -mask_file ', PathMask_left, ' br_z_transf_brain01ERF_noise_0.32-0.6s_', SubjectName,'+tlrc > Extrema_left_Brain.txt'])
+            eval(['!3dExtrema -volume -mask_file ', PathMask_right, ' br_z_transf_brain01ERF_noise_0.32-0.6s_', SubjectName,'+tlrc > Extrema_right_Brain.txt'])
+end
+
+[Table, Mask]=kh_Whereami (SubjectPath, SubjectName, Table, i, 'Mask_complete', 1)
+[Table, Mask]=kh_Whereami (SubjectPath, SubjectName, Table, i, 'left_Brain', 2)
+[Table, Mask]=kh_Whereami (SubjectPath, SubjectName, Table, i, 'right_Brain', 3)
+
 end
 
 
-[newData1]=importfile ('Extrema.txt')
+function [Table, Mask]=kh_Whereami (SubjectPath, SubjectName, Table, i, Mask, A)
 
-eval(['!whereami ', num2str(newData1.data(1,3)),' ', num2str(newData1.data(1,4)),' ', num2str(newData1.data(1,5)), ' > Whereami.txt' ])
+[newData1]=importfile (strcat('Extrema_', Mask, '.txt'))
 
-fid = fopen('Whereami.txt');
+if 0==isstruct(newData1) %kh, Patient18 hat no extreme values
+    Table.(Mask).Location{i,1} = 'subject has no extreme Value';
+    Table.(Mask).Coord(i,1:4)  = [NaN NaN NaN NaN]
+    return
+end
+
+eval(['!whereami ', num2str(newData1.data(1,3)),' ', num2str(newData1.data(1,4)),' ', num2str(newData1.data(1,5)), ' > Whereami_' Mask,'.txt' ])
+
+fid = fopen(strcat('Whereami_',Mask, '.txt'));
 Whereami=textscan(fid, '%s', 'delimiter', sprintf('\f'));
 fclose(fid)
 
@@ -67,11 +90,11 @@ end
   X=double(X)
 [row]=find(X==1)
 
-Table.Location{i} = Whereami{1,1}{row+1}
-Table.Coord(i,:)  = newData1.data(1,2:5)
-
+Table.(Mask).Location{i,1} = Whereami{1,1}{row+1}
+Table.(Mask).Coord(i,1:4)  = newData1.data(1,2:5)
 
 end
+
 
 
 function [newData1]=importfile(fileToRead1)
@@ -88,6 +111,10 @@ HEADERLINES = 10;
 newData1 = importdata(fileToRead1, DELIMITER, HEADERLINES);
 
 % Create new variables in the base workspace from those fields.
+if 0==isstruct(newData1) %kh, Patient18 hat no extreme values 
+    return
+end
+
 vars = fieldnames(newData1);
 for i = 1:length(vars)
     assignin('base', vars{i}, newData1.(vars{i}));

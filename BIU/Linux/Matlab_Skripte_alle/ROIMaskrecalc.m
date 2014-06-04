@@ -27,6 +27,11 @@ eval(['!3dcalc -a ', ROIold, '_recalc+tlrc', ' -b ', 'MNI_avg152T1+tlrc', ' -exp
 % positive Werte in einsen umkehren:
 eval(['!3dcalc -a ', ROIold, '_recalc_recalc+tlrc', ' -exp ''ispositive(a)'' -prefix ', ROIold, 'recalc_recalc_recalc' ])
 
+eval(['!3dcalc -a ', ROIold, '_recalc+tlrc', ' -b ', 'MNI_avg152T1+tlrc', ' -exp ''a*b'' -prefix ', ROIold, '_recalc_recalc' ])
 
+!3dresample -master ERF_noise_0.32-0.6s_Pat_01_13021km+tlrc -prefix mniBrain_1mm -inset /home/kh/abin/MNI_avg152T1+tlrc
+!3dcalc -a mniBrain_1mm+tlrc -exp 'ispositive(a)' -prefix mniBrain_1mm_01
+
+!3dcalc -a /home/kh/data/mniBrain01+tlrc -b ERF_0.2-0.6s_zzz_ca+tlrc -prefix mERF_0.2-0.6s_zzz_ca -exp 'b*a'
 
 end
