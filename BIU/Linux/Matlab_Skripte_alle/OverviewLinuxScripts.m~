@@ -27,7 +27,7 @@ LRttest
 
 % Erstellung von ROI-Masken:
 
-Create_ROI
+Create_ROI.m
 FlipROI % flips left ROI to right Hemisphere
 ROIMaskrecalc.m % after flipping ROI, one has to recalc right ROI, as it does not consist of values of ones after sampling, but of 0,..7. Recalculated to resample values of 1
 ReMasterROI.m % ROI muss resampled werden, damit sie gleiche Auflösung hat
@@ -72,14 +72,43 @@ UTest_normalize.m % NOrmalisierung in MNI space der UTest-Ergebnisse
 extract_UValuesROI_patients.m % Berechnung des LI-Wertes für ROIs
 kh_collect_LI % sammeln der Werte für alle Subjects in einer Matrix
 
+Extract_Max_Activity_no_noise_voxelcomparison.m % Y. meinte in Mail, dass es helfen könnte, keine noisenormalisierung durchzuführen und dann LI auf Voxelbasis zu berechnen
+
+
 % außerdem für Diss:
 extract_Act_patients2.m % erstellt Abbildungen aus maximaler Activität pro Sample für linke und rechte ROI
 Extract_Max_Activity.m % extrahiert Maxima in ROI und berechnet LIs für Summe aus Maxima pro sample und aus höchsten Maximum aller samples
 
 
-% Nützliche Skripte:
 
 % patients with noise normalization
 patients_avg.m
 Timeintervall_patients.m % mit z-transformation und normalisierung
+
+
+% 
+LI_zsores.m % für Patienten
+LI_zsores_controls.m % für Kontrollen, Achtung: Summe wurde durch Anzahl dividiert, funktioniert nicht, noch rückgängig machen! (siehe Patienten)
+FindExtrema.m % Findet pro Maske Extremwerte und gibt Atlas-Region aus => gesamtes Gehirn
+FindExtrema_Controls.m  % Findet pro Maske Extremwerte und gibt Atlas-Region aus  => gesamtes Gehirn
+
+
+% fMRI Fluency VG comparison:
+
+FindExtrema_fMRI_Fluency.m % complete Brain
+FindExtrema_fMRI_FluencyVG_comp_ROIs.m % only ROIS
+FindClust_fMRI_Fluency.m %finds Clusters with peak activity for Broca and Wernicke 
+
+% nützlich:
+
+merge_matrices.m % für vektoren
+
+%MEG-fMRI-comparison:
+FindExtrema_fMRI.m % finds extrema in Verbgeneration task, converting wspmT_001 to z-normalisation and downsampling to MEG resolution
+FindExtrema_fMRI_downs_ROI.m % Findet pro Maske Extremwerte und gibt Atlas-Region aus =>> nur ROI downsampled
+FindExtrema_MEG_ROI_patients.m % Findet pro Maske Extremwerte und gibt Atlas-Region aus =>> nur ROI
+IPN_ccc % Pearson R and CCC for MEG and fMRI Verbgeneration
+
+% FindClust_VG.m
+
 

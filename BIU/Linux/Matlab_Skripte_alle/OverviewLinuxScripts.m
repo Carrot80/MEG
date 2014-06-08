@@ -109,4 +109,6 @@ FindExtrema_fMRI_downs_ROI.m % Findet pro Maske Extremwerte und gibt Atlas-Regio
 FindExtrema_MEG_ROI_patients.m % Findet pro Maske Extremwerte und gibt Atlas-Region aus =>> nur ROI
 IPN_ccc % Pearson R and CCC for MEG and fMRI Verbgeneration
 
+FindClust_VG.m % Findet pro Maske Clusterwerte 
+
 

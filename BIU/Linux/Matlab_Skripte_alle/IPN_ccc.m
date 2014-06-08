@@ -32,9 +32,9 @@ function for_all (Folder, group)
    
     end
 
-    PathPearsonR=strcat('/home/kh/ShareWindows/Corr', filesep, 'PersonR_', group,'_ROIs_MEG.mat')
+    PathPearsonR=strcat('/home/kh/ShareWindows/Corr', filesep, 'PersonR_', group,'_ROIs_MEG_abs.mat')
     save(PathPearsonR, 'PearsonR')
-    PathCCC=strcat('/home/kh/ShareWindows/Corr', filesep, 'CCC_', group,'_ROIs_MEG.mat')
+    PathCCC=strcat('/home/kh/ShareWindows/Corr', filesep, 'CCC_', group,'_ROIs_MEG_abs.mat')
     save(PathCCC, 'CCC')
     
 end
@@ -63,9 +63,9 @@ cd(Path2Subj)
 if 1==strcmp (SubjectName,'Pat_02_13008rh') ||  1==strcmp (SubjectName,'Pat_03_13014bg')
     PathERF = strcat('BothRuns_br_z_transf_brain01ERF_noise_', num2str(TimeInt(1)), '-', num2str(TimeInt(2)), 's', '+tlrc');
 elseif 1==strcmp(group, 'Patients')
-    PathERF = strcat('br_z_transf_brain01ERF_noise_', num2str(TimeInt(1)), '-', num2str(TimeInt(2)), 's_', SubjectName, '+tlrc');
+    PathERF = strcat('br_z_transf_brain01ERF_noise_abs_', num2str(TimeInt(1)), '-', num2str(TimeInt(2)), 's_', SubjectName, '+tlrc');
 else
-    PathERF = strcat('br_z_transf_brain01ERF_', num2str(TimeInt(1)), '-', num2str(TimeInt(2)), 's_', SubjectName, '+tlrc');
+    PathERF = strcat('br_z_transf_brain01ERF_noise_abs_', num2str(TimeInt(1)), '-', num2str(TimeInt(2)), 's_', SubjectName, '+tlrc');
 end
 
 [V_ERF, Info_ERF] = BrikLoad (PathERF);
