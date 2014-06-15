@@ -92,15 +92,12 @@ Act_fMRI(ind)=[];
 %%
 
 
-% [ind_Act_MEG_p05]=find(Act_MEG>1.644853)
-% Act_MEG_p05=Act_MEG(ind_Act_MEG_p05)
-% 
-% [ind_Act_fMRI_p05]=find(Act_fMRI>1.644853)
-% Act_fMRI_p05=Act_fMRI(ind_Act_fMRI_p05)
-% 
-% Pcorr=corr(Act_fMRI_p05, Act_MEG_p05); % normale Person Correlation
-% 
-% ccc=[2*corr(Act_fMRI,Act_MEG).*std(Act_fMRI).*std(Act_MEG)]./[std(Act_fMRI)^2+std(Act_MEG)^2+(mean(Act_fMRI)-mean(Act_MEG))^2 ];
+[ind_Act_MEG_p05]=find(Act_MEG>1.644853)
+Act_MEG_p05=Act_MEG(ind_Act_MEG_p05)
+
+[ind_Act_MEG_p05]=find(Act_MEG>1.644853)
+Act_MEG_p05=Act_MEG(ind_Act_MEG_p05)
+
 
 
 %%

@@ -1,6 +1,11 @@
 % Cleaning-Skripte:
 
+% preprocessing Scripte (außerhalb von Linux):
 
+AverageData.m
+AVG_keepTrials.m
+
+%
 
 % Übersicht über Linux-Skripte
 % Beispielskripte von Yuval:
@@ -17,7 +22,7 @@ Reduce_ERF2Brain01.m % reduces die ERF activity which expands the brain after MN
 kh_z_scoreNormalizationERF.m 
 
 
-% U-Tst for all controls:
+% U-Tst for all controls (group level):
 kh_avg % creating AVG for  all controls (und visuelle Darstellung) => vorher kh_z_scoreNormalizationERF.m 
 LR_ttest % U-Test for Left and Right Hemisphere created by Yuval
 
@@ -92,6 +97,10 @@ LI_zsores_controls.m % für Kontrollen, Achtung: Summe wurde durch Anzahl dividi
 FindExtrema.m % Findet pro Maske Extremwerte und gibt Atlas-Region aus => gesamtes Gehirn
 FindExtrema_Controls.m  % Findet pro Maske Extremwerte und gibt Atlas-Region aus  => gesamtes Gehirn
 
+%
+Timeintervall_test_abs.m % gleicht Fehler aus (sum(abs)) statt abs(sum)
+M400.m % extrahiert nur diesen Zeitbereich
+Li_z_Scores_405ms.m % berechnet LI für 405ms für Kontrollen, hat allerdings nicht funktioniert (Li's teilweise rechtslateral)
 
 % fMRI Fluency VG comparison:
 
@@ -102,13 +111,23 @@ FindClust_fMRI_Fluency.m %finds Clusters with peak activity for Broca and Wernic
 % nützlich:
 
 merge_matrices.m % für vektoren
+ForExcel.m
 
 %MEG-fMRI-comparison:
 FindExtrema_fMRI.m % finds extrema in Verbgeneration task, converting wspmT_001 to z-normalisation and downsampling to MEG resolution
 FindExtrema_fMRI_downs_ROI.m % Findet pro Maske Extremwerte und gibt Atlas-Region aus =>> nur ROI downsampled
 FindExtrema_MEG_ROI_patients.m % Findet pro Maske Extremwerte und gibt Atlas-Region aus =>> nur ROI
 IPN_ccc % Pearson R and CCC for MEG and fMRI Verbgeneration
+Percent_Overlap_MEG_abs.m %inklusive fMRI informed MEG => noch ausbauen; % außerdem: Möglichkeit, neue Maske zu erstellen mit Überlappungsbereich
+merge_Clusters.m
 
-FindClust_VG.m % Findet pro Maske Clusterwerte 
+FindClust_VG.m % Findet pro Maske Clusterwerte  
+
+
+
+% Versuch, ttest linke gegen rechte hemisphäre zu berechnen bei ungemittelten Daten:
+CopyCleanData.m % kopiert CleanData.mat von Windows zum Linuxordner 
+LR_ttest_dep.m  % => hier auch Beschreibung für Patienten, welche gesäuberten Daten genommen worden sidn
+
 
 

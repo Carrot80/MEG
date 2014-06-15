@@ -22,7 +22,7 @@ function TimeIntervall (nameFolds, ControlsFolder)
 VlrAll= [];
 Vall = [];
 
-TimeInt = [.32, .47]; % TimInt unten noch anpassen
+TimeInt = [.32, .6]; % TimInt unten noch anpassen
 
 for i= 1:size(nameFolds)
 % for i= 1:5
@@ -74,7 +74,7 @@ for i= 1:10
     sample_int_End=size(find(time_sec<=TimeInt(1,2)));
     
     % sum forth dimension:
-    V_SumTime=sum(V_1_1000ms(:,:,:, sample_int_Beg(2):sample_int_End(2)),4);
+    V_SumTime=sum(V_1_1000ms(:,:,:, sample_int_Beg(2):sample_int_End(2)),4); % stimmt so, da nur positive Werte summiert werden (siehe kh_SAM_Beamforming_keeptrials => abs(vs))
     
     clear V V_1_1000ms       
     

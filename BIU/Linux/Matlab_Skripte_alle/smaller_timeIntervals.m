@@ -49,7 +49,7 @@ sample_int_Beg=size(find(time_sec<=TimeBeg));
 sample_int_End=size(find(time_sec<=TimeEnd));
 
 vs_IntOfIn=vs_1_1000ms(:,sample_int_Beg(2):sample_int_End(2));
-sum_vs_IntOfIn = abs(sum(vs_IntOfIn'));
+sum_vs_IntOfIn = abs(sum(vs_IntOfIn')); % Achtung falsch!
 
 
 % Save it to load it in afni
