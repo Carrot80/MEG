@@ -1,5 +1,0 @@
-
-Files = '/home/kh/ShareWindows/data/patients/patients_SAM';
-Dir = dir(Files);
-isub = [Dir(:).isdir];
-nameFolds = {DIR(isub).name}';
